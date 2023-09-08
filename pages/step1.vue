@@ -1,5 +1,5 @@
 <template>
-    <p>I am in step 1</p>
+    <Nav></Nav>
     <Stepper/>
 </template>
 <script></script>

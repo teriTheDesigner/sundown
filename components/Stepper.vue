@@ -1,11 +1,18 @@
 <template>
-     <nav>
-      <ul class="flex justify-around">
-        <li><NuxtLink to="/dashboard">dashboard</NuxtLink></li>
-        <li><NuxtLink to="/step1">Step 1</NuxtLink></li>
-        <li><NuxtLink to="/step2">Step 2</NuxtLink></li>
-        <li><NuxtLink to="/step3">Step 3</NuxtLink></li>
-        <li><NuxtLink to="/step4">Step 4</NuxtLink></li>
+     <nav class="pt-20 pb-20">
+      <ul class=" content-container mx-auto flex justify-center items-center  "> 
+
+       <NuxtLink class="flex flex-col items-center justify-center h-8 w-8 rounded-full bg-blue-400 " to="/step1"> 1</NuxtLink>
+       <span class="w-48 h-1 bg-blue-400"></span>
+       <NuxtLink class="flex flex-col items-center justify-center h-8 w-8 rounded-full bg-blue-400" to="/step2"> 2</NuxtLink>
+       <span class="w-48 h-1 bg-blue-400"></span>
+        <NuxtLink class="flex flex-col items-center justify-center h-8 w-8 rounded-full bg-blue-400" to="/step3"> 3</NuxtLink>
+        <span class="w-48 h-1 bg-blue-400"></span>
+      <NuxtLink class="flex flex-col items-center justify-center h-8 w-8 rounded-full bg-blue-400" to="/step4"> 4</NuxtLink>
       </ul>
     </nav>
 </template>
+<style scoped>
+
+
+</style>
