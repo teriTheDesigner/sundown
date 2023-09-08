@@ -22,8 +22,6 @@
 
 let users=[];
 
-
-
 onMounted(async () => {
 
     const res = await fetch('/data/users.json')
