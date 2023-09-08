@@ -1,7 +1,7 @@
 <template>
     <Nav></Nav>
-<div class="flex flex-col place-items-center">
-    <div class="content-container flex flex-col place-items-center h-screen ">
+<div class="h-screen flex flex-col pt-16 pb-16 place-items-center">
+    <div class="content-container flex flex-col place-items-center  ">
         
      <div class="flex flex-col justify-between m-auto h-60 ">
 <label class="flex flex-col gap-2"  >

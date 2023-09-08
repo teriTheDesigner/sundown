@@ -1,5 +1,5 @@
 <template>
-     <div class="pt-20 pb-20">
+     <div class="pt-8 pb-8">
       <div class=" content-container mx-auto flex justify-center items-center  "> 
 
        <NuxtLink class="flex flex-col items-center justify-center h-8 w-8 rounded-full bg-blue-400 " to="/step1"> 1</NuxtLink>

@@ -1,7 +1,11 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
+
+
+
 const displayPage = ref(false);
+
 
 onMounted(()=>{
     const user = localStorage.getItem('validUser');
