@@ -8,18 +8,17 @@ export const useGlobalStore = defineStore("user", {
     firstName: "",
     lastName: "",
     avatar: "",
-    reports: [
-      {
-        id: "",
-        name: "",
-        description: "",
-        date: "",
-        images: "",
-        longitude: "",
-        latitude: "",
-        timestamp: "",
-      },
-    ],
+    allReports: [],
+    report: {
+      id: null,
+      name: "",
+      description: "",
+      date: "",
+      images: [],
+      longitude: "",
+      latitude: "",
+      timestamp: "",
+    },
   }),
   actions: {
     setEmail(email) {
@@ -39,6 +38,41 @@ export const useGlobalStore = defineStore("user", {
     },
     setAvatar(avatar) {
       this.avatar = avatar;
+    },
+    setReportName(name) {
+      console.log(name);
+      this.report.name = name;
+    },
+    setReportDescription(description) {
+      this.report.description = description;
+    },
+
+    addReport() {
+      const newReportId = this.allReports.length + 1;
+
+      const newReport = {
+        id: newReportId,
+        name: this.report.name,
+        description: this.report.description,
+        date: this.report.date,
+        images: this.report.images,
+        longitude: this.report.longitude,
+        latitude: this.report.latitude,
+        timestamp: this.report.timestamp,
+      };
+
+      this.allReports.push(newReport);
+
+      this.report = {
+        id: null,
+        name: "",
+        description: "",
+        date: "",
+        images: [],
+        longitude: "",
+        latitude: "",
+        timestamp: "",
+      };
     },
   },
 });
