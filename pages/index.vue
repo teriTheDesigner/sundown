@@ -17,33 +17,39 @@
 </template>
 <script setup>
     import {  onMounted, ref } from 'vue'
+    import { useGlobalStore} from "../store/user"
+const globalStore = useGlobalStore();
+
     const email = ref('');
     const password = ref('');
-
 let users=[];
 
 onMounted(async () => {
 
     const res = await fetch('/data/users.json')
     users = await res.json();
-    console.log(users)
+    console.log(users);
 })
 
+
+
 function Login(){
-    const foundUser = users.find(user => user.email === email.value && user.password === password.value) 
+    const foundUser = users.find(user => user.email === email.value && user.password === password.value ) 
    
     if (foundUser) {
+
         localStorage.setItem('validUser', email.value)
         console.log("user logged in");
-        
+        globalStore.setEmail(email.value);
+        globalStore.setUserName(foundUser.username);
+        globalStore.setCodeName(foundUser.code_name);
+        globalStore.setFirstName(foundUser.first_name);
+        globalStore.setLastName(foundUser.last_name);
+        globalStore.setAvatar(foundUser.avatar);
     } else {
         console.log("email not found");
     }
 }
-
-
-
-
 
 
 </script>

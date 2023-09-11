@@ -1,9 +1,13 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-
+import { useGlobalStore} from "../store/user"
+const globalStore = useGlobalStore();
 
 const displayPage = ref(false);
 
+const missionName = ref('');
+const missionDescription = ref('');
+const date = ref('');
 
 
 onMounted(()=>{
@@ -19,12 +23,13 @@ onMounted(()=>{
     <Stepper/>
     <label>
         Mission Name
-        <input class="bg-gray-200" type="text">
+        <input v-model="missionName" class="bg-gray-200" type="text">
     </label>
     <label>
         Mission Description
-        <input class="bg-gray-200" type="text">
+        <input v-model="missionDescription" class="bg-gray-200" type="text">
     </label>
+
  
     
 </div>
