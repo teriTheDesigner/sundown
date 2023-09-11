@@ -34,17 +34,17 @@ onMounted(()=>{
     <div class="col-start-1 col-end-6 flex flex-col gap-20">
         <label class="flex flex-col gap-4">
         Mission Name
-        <input @input="changeReportName" class="bg-gray-200 p-2 h-12 " type="text">
+        <input @input="changeReportName" class="border p-2 h-12 border-gray-600" type="text">
     </label>
     <label class="flex flex-col gap-4">
         Mission Description
-        <textarea @input="changeReportDescription" class="bg-gray-200 p-2 h-32" type="text"></textarea>
+        <textarea @input="changeReportDescription" class="border p-2  border-gray-600 h-32" type="text"></textarea>
     </label>
     </div>
        <div class="col-start-9 col-end-13 flex flex-col justify-between">   
     <label class="flex flex-col gap-4 ">
       Mission Date
-      <input @input="changeReportDate" class="bg-gray-200 p-2 h-12" type="date">
+      <input @input="changeReportDate" class="border p-2  border-gray-600 h-12" type="date">
     </label>
     <NuxtLink class=" rounded h-12 w-52 bg-slate-400 flex flex-col items-center justify-center"   to="/step2">NEXT STEP</NuxtLink></div>  
 
