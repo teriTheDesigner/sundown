@@ -47,6 +47,9 @@ export const useGlobalStore = defineStore("user", {
       this.report.description = description;
     },
 
+    setReportDate(date) {
+      this.report.date = date;
+    },
     addReport() {
       const newReportId = this.allReports.length + 1;
 

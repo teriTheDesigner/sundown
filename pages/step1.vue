@@ -14,6 +14,10 @@ function changeReportDescription(e){
     globalStore.setReportDescription( e.target.value);
 }
 
+function changeReportDate(e) {
+    globalStore.setReportDate( e.target.value);
+}
+
 onMounted(()=>{
     const user = localStorage.getItem('validUser');
     displayPage.value = user && user !== 'undefined'
@@ -22,19 +26,29 @@ onMounted(()=>{
 </script>
 
 <template>
-    <div v-if="displayPage">
+    <div v-if="displayPage" >
     <Nav></Nav>
     <Stepper/>
-    <label>
+    <div class=" pt-20 pb-20">
+        <div class=" content-container mx-auto grid grid-cols-12 justify-center">
+    <div class="col-start-1 col-end-6 flex flex-col gap-20">
+        <label class="flex flex-col gap-4">
         Mission Name
-        <input @input="changeReportName" class="bg-gray-200" type="text">
+        <input @input="changeReportName" class="bg-gray-200 p-2 h-12 " type="text">
     </label>
-    <label>
+    <label class="flex flex-col gap-4">
         Mission Description
-        <input @input="changeReportDescription" class="bg-gray-200" type="text">
+        <textarea @input="changeReportDescription" class="bg-gray-200 p-2 h-32" type="text"></textarea>
     </label>
+    </div>
+       <div class="col-start-9 col-end-13 flex flex-col justify-between">   
+    <label class="flex flex-col gap-4 ">
+      Mission Date
+      <input @input="changeReportDate" class="bg-gray-200 p-2 h-12" type="date">
+    </label>
+    <NuxtLink class=" rounded h-12 w-52 bg-slate-400 flex flex-col items-center justify-center"   to="/step2">NEXT STEP</NuxtLink></div>  
 
- 
+</div></div>
     
 </div>
 <h1 v-else>This page is protected</h1>
