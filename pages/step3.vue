@@ -34,14 +34,14 @@ onMounted(async () => {
 
   if (displayPage.value) {
     fetchISSLocation();
-    setInterval(fetchISSLocation, 30000);
+    setInterval(fetchISSLocation, 10000);
     await loadOpenLayersLibrary();
   }
 });
 
 const fetchISSLocation = async () => {
   const timestamp = Date.now();
-  const unixTimestamp = Math.floor(timestamp / 1000);
+  const unixTimestamp = Math.floor(timestamp / 3000);
   console.log(unixTimestamp);
   try {
     const response = await fetch(
@@ -96,9 +96,34 @@ const createMap = () => {
           Number(longitude.value),
           Number(latitude.value),
         ]),
-        zoom: 2,
+        zoom: 5,
       }),
     });
+
+    if (latitude.value !== null && longitude.value !== null) {
+      const marker = new ol.layer.Vector({
+        source: new ol.source.Vector({
+          features: [
+            new ol.Feature({
+              geometry: new ol.geom.Point(
+                ol.proj.fromLonLat([
+                  Number(longitude.value),
+                  Number(latitude.value),
+                ])
+              ),
+            }),
+          ],
+        }),
+        style: new ol.style.Style({
+          image: new ol.style.Icon({
+            src: "https://docs.maptiler.com/openlayers/default-marker/marker-icon.png",
+            anchor: [0.5, 1],
+          }),
+        }),
+      });
+
+      map.addLayer(marker);
+    }
   }
 };
 </script>
