@@ -23,10 +23,7 @@ const globalStore = useGlobalStore();
 const displayPage = ref(false);
 const latitude = ref(null);
 const longitude = ref(null);
-
-function changeLatitude() {
-  globalStore.setLatitude(latitude);
-}
+const map = ref(null);
 
 onMounted(async () => {
   const user = localStorage.getItem("validUser");
@@ -34,7 +31,7 @@ onMounted(async () => {
 
   if (displayPage.value) {
     fetchISSLocation();
-    setInterval(fetchISSLocation, 10000);
+    setInterval(fetchISSLocation, 60000);
     await loadOpenLayersLibrary();
   }
 });
@@ -75,6 +72,7 @@ const loadOpenLayersLibrary = () => {
 
 watchEffect(() => {
   if (latitude.value !== null && longitude.value !== null) {
+    map.value = null;
     createMap();
   }
 });
@@ -82,7 +80,7 @@ watchEffect(() => {
 const createMap = () => {
   console.log(latitude.value, longitude.value);
   if (latitude.value !== null && longitude.value !== null) {
-    const map = new ol.Map({
+    map.value = new ol.Map({
       layers: [
         new ol.layer.Tile({
           source: new ol.source.XYZ({
@@ -96,7 +94,7 @@ const createMap = () => {
           Number(longitude.value),
           Number(latitude.value),
         ]),
-        zoom: 5,
+        zoom: 2,
       }),
     });
 
@@ -122,7 +120,7 @@ const createMap = () => {
         }),
       });
 
-      map.addLayer(marker);
+      map.value.addLayer(marker);
     }
   }
 };
