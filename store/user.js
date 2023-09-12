@@ -50,6 +50,10 @@ export const useGlobalStore = defineStore("user", {
     setReportDate(date) {
       this.report.date = date;
     },
+    setImages(index, image) {
+      console.log(index, image);
+      this.report.images.push({ index, image });
+    },
     addReport() {
       const newReportId = this.allReports.length + 1;
 
@@ -78,4 +82,5 @@ export const useGlobalStore = defineStore("user", {
       };
     },
   },
+  getters: {},
 });
