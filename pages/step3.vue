@@ -1,5 +1,8 @@
 <script setup>
-import { ref, onMounted, watchEffect } from "vue";
+import { ref, onMounted } from "vue";
+
+import { useGlobalStore } from "../store/user";
+const globalStore = useGlobalStore();
 
 const displayPage = ref(false);
 const latitude = ref(null);
@@ -16,15 +19,14 @@ onMounted(async () => {
     await loadOpenLayersLibrary();
     createMap();
     fetchISSLocation();
-    setInterval(fetchISSLocation, 10000);
+    setInterval(fetchISSLocation, 60000);
   }
 });
 
 const fetchISSLocation = async () => {
   const timestamp = Date.now();
   const unixTimestamp = Math.floor(timestamp / 3000);
-  currentTimestamp = unixTimestamp;
-  console.log(currentTimestamp);
+
   try {
     const response = await fetch(
       `https://api.wheretheiss.at/v1/satellites/25544?timestamp=${unixTimestamp}`
@@ -33,6 +35,7 @@ const fetchISSLocation = async () => {
       const data = await response.json();
       latitude.value = data.latitude;
       longitude.value = data.longitude;
+      currentTimestamp = unixTimestamp;
 
       // Update the map with new coordinates
       updateMap();
@@ -111,6 +114,12 @@ const updateMap = () => {
     );
   }
 };
+
+function updateReport() {
+  globalStore.setLongitude(longitude.value);
+  globalStore.setLatitude(latitude.value);
+  globalStore.setTimestamp(currentTimestamp);
+}
 </script>
 
 <template>
@@ -141,6 +150,7 @@ const updateMap = () => {
             />
           </label>
           <NuxtLink
+            @click="updateReport"
             class="rounded h-12 w-52 bg-slate-400 flex flex-col items-center justify-center"
             to="/step4"
             >NEXT STEP</NuxtLink

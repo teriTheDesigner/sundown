@@ -56,6 +56,16 @@ export const useGlobalStore = defineStore("user", {
     setImages(selectedImages) {
       this.report.images = selectedImages;
     },
+    setLongitude(longitude) {
+      this.report.longitude = longitude;
+    },
+    setLatitude(latitude) {
+      this.report.latitude = latitude;
+    },
+    setTimestamp(timestamp) {
+      this.report.timestamp = timestamp;
+    },
+
     addReport() {
       const newReportId = this.allReports.length + 1;
 
