@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 
 export const useGlobalStore = defineStore("user", {
   state: () => ({
-    email: "",
+    email: "email here",
     userName: "",
     codeName: "",
     firstName: "",
@@ -21,6 +21,9 @@ export const useGlobalStore = defineStore("user", {
     },
   }),
   actions: {
+    changeEmail(newEmail) {
+      this.email = newEmail;
+    },
     setEmail(email) {
       this.email = email;
     },
@@ -50,9 +53,8 @@ export const useGlobalStore = defineStore("user", {
     setReportDate(date) {
       this.report.date = date;
     },
-    setImages(index, image) {
-      console.log(index, image);
-      this.report.images.push({ index, image });
+    setImages(selectedImages) {
+      this.report.images = selectedImages;
     },
     addReport() {
       const newReportId = this.allReports.length + 1;

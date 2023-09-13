@@ -24,6 +24,7 @@ const displayPage = ref(false);
 const latitude = ref(null);
 const longitude = ref(null);
 const map = ref(null);
+// const apiKey = process.env.VUE_APP_MAP_API_KEY;
 
 onMounted(async () => {
   const user = localStorage.getItem("validUser");
@@ -31,7 +32,7 @@ onMounted(async () => {
 
   if (displayPage.value) {
     fetchISSLocation();
-    setInterval(fetchISSLocation, 60000);
+    setInterval(fetchISSLocation, 120000);
     await loadOpenLayersLibrary();
   }
 });
@@ -84,7 +85,7 @@ const createMap = () => {
       layers: [
         new ol.layer.Tile({
           source: new ol.source.XYZ({
-            url: "https://api.maptiler.com/maps/basic-v2/256/{z}/{x}/{y}.png?key=00BVJaSkhTUVFkQcPsvf",
+            url: `https://api.maptiler.com/maps/basic-v2/256/{z}/{x}/{y}.png?key=00BVJaSkhTUVFkQcPsvf`,
           }),
         }),
       ],
@@ -94,7 +95,7 @@ const createMap = () => {
           Number(longitude.value),
           Number(latitude.value),
         ]),
-        zoom: 2,
+        zoom: 5,
       }),
     });
 
