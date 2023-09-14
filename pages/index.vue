@@ -33,12 +33,8 @@ function Login() {
 }
 </script>
 <template>
-  <Nav></Nav>
-
-  <div
-    class="h-screen bg-black text-white flex flex-col pt-16 pb-16 place-items-center"
-  >
-    <div class="content-container flex flex-col place-items-center">
+  <div class="h-screen bg-black text-white flex flex-col place-items-center">
+    <div class="content-container flex flex-col place-items-center m-auto">
       <div
         class="flex flex-col bg-white text-black p-6 items-center justify-between m-auto w-80 h-80"
       >
