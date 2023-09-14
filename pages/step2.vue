@@ -84,56 +84,63 @@ console.log(selectedImages.value);
 </script>
 
 <template>
-  <div>
-    <div v-if="displayPage">
-      <Nav></Nav>
-      <Stepper />
-      <div class="pt-20 pb-20">
-        <div class="content-container mx-auto grid grid-cols-12 justify-center">
-          <div class="col-start-1 col-end-7 grid grid-cols-3 h-max gap-2">
-            <div
-              v-for="(image, index) in displayedImages"
-              :key="index"
-              class="w-40 h-40 overflow-hidden"
-            >
-              <img
-                @click="selectImages(image, index)"
-                :src="image.img_src"
-                alt="mars image"
-                class="object-cover w-full h-full"
-              />
-            </div>
-
-            <button
-              @click="loadMoreImages"
-              v-if="displayedImages.length < images.length"
-            >
-              LOAD MORE
-            </button>
-          </div>
-          <div class="col-start-8 col-end-13 grid grid-cols-4 gap-1 h-max">
-            <div
-              v-for="image in selectedImages"
-              :key="image.index"
-              class="w-24 h-24 overflow-hidden"
-            >
-              <img
-                @click="deleteImage(image.image, image.index)"
-                :src="image.image.img_src"
-                alt="mars image"
-                class="object-cover w-full h-full"
-              />
-            </div>
-          </div>
-          <NuxtLink
-            class="rounded h-12 w-52 bg-slate-400 flex flex-col items-center justify-center"
-            to="/step3"
-            @click="updateImages"
-            >NEXT STEP</NuxtLink
+  <div v-if="displayPage">
+    <Nav></Nav>
+    <Stepper />
+    <div class="pt-20 pb-20">
+      <div class="content-container mx-auto grid grid-cols-12 justify-center">
+        <div class="col-start-1 col-end-7 grid grid-cols-3 h-max gap-2">
+          <div
+            v-for="(image, index) in displayedImages"
+            :key="index"
+            class="w-40 h-40 overflow-hidden"
           >
+            <img
+              @click="selectImages(image, index)"
+              :src="image.img_src"
+              alt="mars image"
+              class="object-cover w-full h-full"
+            />
+          </div>
+
+          <button
+            @click="loadMoreImages"
+            v-if="displayedImages.length < images.length"
+          >
+            LOAD MORE
+          </button>
         </div>
+        <div class="col-start-8 col-end-13 grid grid-cols-4 gap-1 h-max">
+          <div
+            v-for="image in selectedImages"
+            :key="image.index"
+            class="w-24 h-24 overflow-hidden"
+          >
+            <img
+              @click="deleteImage(image.image, image.index)"
+              :src="image.image.img_src"
+              alt="mars image"
+              class="object-cover w-full h-full"
+            />
+          </div>
+        </div>
+        <NuxtLink
+          class="rounded h-12 w-52 bg-slate-400 flex flex-col items-center justify-center"
+          to="/step3"
+          @click="updateImages"
+          >NEXT STEP</NuxtLink
+        >
       </div>
     </div>
-    <h1 v-else>This page is protected</h1>
+  </div>
+  <div v-else class="h-screen flex place-items-center">
+    <div class="m-auto flex flex-col place-items-center gap-20">
+      <h1 class="text-3xl">This page is protected</h1>
+      <NuxtLink to="/"
+        ><button class="rounded h-12 w-48 bg-white text-black">
+          LOGIN
+        </button></NuxtLink
+      >
+    </div>
   </div>
 </template>

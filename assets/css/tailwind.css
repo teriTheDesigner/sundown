@@ -5,3 +5,8 @@
 .content-container {
   max-width: 1000px;
 }
+
+.backgroundImg {
+  background-image: url("../img/kai-pilger-Ef6iL87-vOA-unsplash.jpg");
+  background-size: cover;
+}

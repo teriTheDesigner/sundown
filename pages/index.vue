@@ -33,10 +33,12 @@ function Login() {
 }
 </script>
 <template>
-  <div class="h-screen bg-black text-white flex flex-col place-items-center">
+  <div
+    class="h-screen backgroundImg text-white flex flex-col place-items-center"
+  >
     <div class="content-container flex flex-col place-items-center m-auto">
       <div
-        class="flex flex-col bg-white text-black p-6 items-center justify-between m-auto w-80 h-80"
+        class="flex rounded-xl flex-col bg-white text-black p-6 items-center justify-between m-auto w-80 h-80"
       >
         <label class="flex flex-col gap-2">
           E-mail:
@@ -56,7 +58,7 @@ function Login() {
         </label>
         <NuxtLink to="/dashboard"
           ><button @click="Login" class="rounded h-12 w-56 bg-slate-400">
-            Login
+            LOGIN
           </button></NuxtLink
         >
       </div>

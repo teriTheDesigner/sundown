@@ -159,5 +159,14 @@ function updateReport() {
       </div>
     </div>
   </div>
-  <h1 v-else>This page is protected</h1>
+  <div v-else class="h-screen flex place-items-center">
+    <div class="m-auto flex flex-col place-items-center gap-20">
+      <h1 class="text-3xl">This page is protected</h1>
+      <NuxtLink to="/"
+        ><button class="rounded h-12 w-48 bg-white text-black">
+          LOGIN
+        </button></NuxtLink
+      >
+    </div>
+  </div>
 </template>

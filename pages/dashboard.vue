@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useGlobalStore } from "../store/user";
+
 const globalStore = useGlobalStore();
 const displayPage = ref(false);
 
@@ -28,10 +29,8 @@ function editReport(index) {
   globalStore.allReports.splice(index, 1);
 }
 function deleteReport(index) {
-  // Remove the report from the allReports array
   globalStore.allReports.splice(index, 1);
 
-  // Update local storage to reflect the changes
   const userData = localStorage.getItem(globalStore.email);
   if (userData) {
     const userDataObj = JSON.parse(userData);
@@ -46,17 +45,17 @@ function deleteReport(index) {
     <Nav></Nav>
     <div class="pt-20 pb-20 h-screen">
       <div class="content-container mx-auto grid grid-cols-12">
-        <h1 class="col-start-1 col-end-13 place-self-center mb-12">
-          Welcome {{ globalStore.codeName }}
+        <h1 class="text-2xl col-start-1 col-end-13 place-self-center mb-12">
+          Welcome back, {{ globalStore.codeName }}!
         </h1>
 
-        <div
-          class="col-start-1 col-end-7 flex flex-col gap-8 border border-black"
-        >
+        <div class="col-start-1 col-end-7 flex flex-col gap-8">
           <h2>Your Reports:</h2>
           <div class="flex flex-col gap-12">
             <div v-for="(report, index) in globalStore.allReports" :key="index">
-              <div class="flex w-full justify-between border-b border-black">
+              <div
+                class="flex w-full justify-between rounded bg-white text-black p-4"
+              >
                 <div class="flex flex-col gap-2">
                   <p><b>Report Name:</b> {{ report.name }}</p>
                   <p>{{ report.date }}</p>
@@ -65,13 +64,13 @@ function deleteReport(index) {
                   <NuxtLink
                     @click="() => editReport(index)"
                     to="/step1"
-                    class="rounded h-8 p-2 bg-slate-400 flex flex-col items-center justify-center"
+                    class="rounded h-8 p-4 bg-black text-white flex flex-col items-center justify-center"
                     >EDIT</NuxtLink
                   >
 
                   <button
                     @click="() => deleteReport(index)"
-                    class="rounded h-8 p-2 bg-slate-400 flex flex-col items-center justify-center"
+                    class="rounded h-8 p-2 border border-black flex flex-col items-center justify-center"
                   >
                     DELETE
                   </button>
@@ -81,12 +80,21 @@ function deleteReport(index) {
           </div>
         </div>
         <NuxtLink
-          class="col-start-9 col-end-13 rounded h-12 w-52 bg-slate-400 flex flex-col items-center justify-center"
+          class="col-start-9 col-end-13 rounded h-12 w-52 bg-white text-black flex flex-col items-center justify-center"
           to="/step1"
           >+ CREATE NEW REPORT</NuxtLink
         >
       </div>
     </div>
   </div>
-  <h1 v-else>This page is protected</h1>
+  <div v-else class="h-screen flex place-items-center">
+    <div class="m-auto flex flex-col place-items-center gap-20">
+      <h1 class="text-3xl">This page is protected</h1>
+      <NuxtLink to="/"
+        ><button class="rounded h-12 w-48 bg-white text-black">
+          LOGIN
+        </button></NuxtLink
+      >
+    </div>
+  </div>
 </template>
