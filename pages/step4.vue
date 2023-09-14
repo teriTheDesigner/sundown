@@ -36,7 +36,9 @@ function saveUserDataToLocalStorage() {
     <Stepper />
     <div class="pt-20 pb-20">
       <div class="content-container mx-auto grid grid-cols-12 justify-center">
-        <div class="col-start-1 col-end-6 flex flex-col gap-8">
+        <div
+          class="bg-white text-black p-4 col-start-1 col-end-6 flex flex-col gap-8"
+        >
           <div class="flex flex-col gap-2">
             <h2><b>Mission Name</b></h2>
             <p>{{ globalStore.report.name }}</p>
