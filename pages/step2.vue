@@ -21,6 +21,10 @@ onMounted(() => {
 
   if (displayPage.value) {
     fetchImages();
+    selectedImages.value = globalStore.report.images.map((image, index) => ({
+      ...image,
+      index,
+    }));
   }
 });
 
@@ -75,8 +79,8 @@ const loadMoreImages = () => {
 
 function updateImages() {
   globalStore.setImages(selectedImages.value);
-  console.log(selectedImages.value);
 }
+console.log(selectedImages.value);
 </script>
 
 <template>

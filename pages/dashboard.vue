@@ -25,6 +25,19 @@ onMounted(() => {
 function editReport(index) {
   console.log("adding report with index ", index);
   globalStore.report = globalStore.allReports[index];
+  globalStore.allReports.splice(index, 1);
+}
+function deleteReport(index) {
+  // Remove the report from the allReports array
+  globalStore.allReports.splice(index, 1);
+
+  // Update local storage to reflect the changes
+  const userData = localStorage.getItem(globalStore.email);
+  if (userData) {
+    const userDataObj = JSON.parse(userData);
+    userDataObj.allReports = globalStore.allReports;
+    localStorage.setItem(globalStore.email, JSON.stringify(userDataObj));
+  }
 }
 </script>
 
@@ -57,6 +70,7 @@ function editReport(index) {
                   >
 
                   <button
+                    @click="() => deleteReport(index)"
                     class="rounded h-8 p-2 bg-slate-400 flex flex-col items-center justify-center"
                   >
                     DELETE

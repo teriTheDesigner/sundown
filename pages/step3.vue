@@ -133,7 +133,7 @@ function updateReport() {
           <label class="flex flex-col gap-4"
             >Latitude:
             <input
-              class="border p-2 border-gray-600 h-12"
+              class="border text-black p-2 border-gray-600 h-12"
               type="text"
               readonly
               v-model="latitude"
@@ -143,7 +143,7 @@ function updateReport() {
           <label class="flex flex-col gap-4"
             >Longitude:
             <input
-              class="border p-2 border-gray-600 h-12"
+              class="border text-black p-2 border-gray-600 h-12"
               type="text"
               readonly
               v-model="longitude"
