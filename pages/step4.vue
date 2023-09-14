@@ -11,6 +11,23 @@ onMounted(() => {
 });
 function saveReport() {
   globalStore.addReport();
+  saveUserDataToLocalStorage();
+}
+function saveUserDataToLocalStorage() {
+  const userData = {
+    email: globalStore.email,
+    userName: globalStore.userName,
+    codeName: globalStore.codeName,
+    firstName: globalStore.firstName,
+    lastName: globalStore.lastName,
+    avatar: globalStore.avatar,
+    allReports: globalStore.allReports,
+    report: globalStore.report,
+  };
+
+  const userDataJson = JSON.stringify(userData);
+
+  localStorage.setItem(globalStore.email, userDataJson);
 }
 </script>
 <template>

@@ -94,5 +94,4 @@ export const useGlobalStore = defineStore("user", {
       };
     },
   },
-  getters: {},
 });

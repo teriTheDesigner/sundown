@@ -1,10 +1,8 @@
 <template>
-  
- <NuxtLayout>
-  
-    <NuxtPage />
-    </NuxtLayout>
+  <NuxtLayout>
+    <div class="bg-black text-white">
+      <NuxtPage />
+    </div>
+  </NuxtLayout>
 </template>
-<script>
-
-</script>
+<script></script>
