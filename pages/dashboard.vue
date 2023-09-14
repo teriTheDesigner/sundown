@@ -21,6 +21,11 @@ onMounted(() => {
     globalStore.report = userDataObj.report;
   }
 });
+
+function editReport(index) {
+  console.log("adding report with index ", index);
+  globalStore.report = globalStore.allReports[index];
+}
 </script>
 
 <template>
@@ -44,11 +49,13 @@ onMounted(() => {
                   <p>{{ report.date }}</p>
                 </div>
                 <div class="flex gap-6">
-                  <button
+                  <NuxtLink
+                    @click="() => editReport(index)"
+                    to="/step1"
                     class="rounded h-8 p-2 bg-slate-400 flex flex-col items-center justify-center"
+                    >EDIT</NuxtLink
                   >
-                    EDIT
-                  </button>
+
                   <button
                     class="rounded h-8 p-2 bg-slate-400 flex flex-col items-center justify-center"
                   >
