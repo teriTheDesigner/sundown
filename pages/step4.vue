@@ -72,13 +72,13 @@ function saveUserDataToLocalStorage() {
               class="object-cover w-full h-full"
             />
           </div>
-          <NuxtLink
-            @click="saveReport"
-            class="rounded h-12 w-52 bg-slate-400 flex flex-col items-center justify-center"
-            to="/dashboard"
-            >SAVE REPORT</NuxtLink
-          >
         </div>
+        <NuxtLink
+          @click="saveReport"
+          class="rounded col-start-11 col-end-13 h-12 w-52 bg-slate-400 flex flex-col items-center justify-center"
+          to="/dashboard"
+          >SAVE REPORT</NuxtLink
+        >
       </div>
     </div>
   </div>

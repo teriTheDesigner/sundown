@@ -38,6 +38,7 @@ onMounted(() => {
               v-model="reportName"
               class="border text-black p-2 h-12 border-gray-600"
               type="text"
+              required
             />
           </label>
           <label class="flex flex-col gap-4">
@@ -46,6 +47,7 @@ onMounted(() => {
               v-model="reportDescription"
               class="border text-black p-2 border-gray-600 h-32"
               type="text"
+              required
             ></textarea>
           </label>
         </div>
@@ -56,6 +58,7 @@ onMounted(() => {
               v-model="reportDate"
               class="border text-black p-2 border-gray-600 h-12"
               type="date"
+              required
             />
           </label>
           <NuxtLink

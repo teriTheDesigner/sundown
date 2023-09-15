@@ -57,8 +57,8 @@ function Login() {
     globalStore.setLastName(foundUser.last_name);
     globalStore.setAvatar(foundUser.avatar);
   } else {
-    console.log("email not found");
     userNotFound.value = true;
+    console.log("email not found", userNotFound.value);
   }
 }
 
@@ -72,7 +72,10 @@ const isButtonDisabled = computed(() => {
   <div
     class="h-screen backgroundImg text-white flex flex-col place-items-center"
   >
-    <div class="content-container flex flex-col place-items-center m-auto">
+    <div
+      v-if="!userNotFound"
+      class="content-container flex flex-col place-items-center m-auto"
+    >
       <div
         class="flex rounded-xl flex-col bg-white text-black p-6 items-center justify-between m-auto w-80 h-80"
       >
@@ -119,8 +122,19 @@ const isButtonDisabled = computed(() => {
         >
       </div>
     </div>
-    <div v-if="userNotFound">
-      <div></div>
+    <div
+      v-if="userNotFound"
+      class="fixed inset-0 flex items-center justify-center"
+    >
+      <div class="modal bg-black bg-opacity-50 p-6 rounded-xl text-white">
+        <p>Email not found.</p>
+        <button
+          @click="userNotFound = false"
+          class="mt-4 px-4 py-2 bg-slate-400 rounded"
+        >
+          Close
+        </button>
+      </div>
     </div>
   </div>
 </template>

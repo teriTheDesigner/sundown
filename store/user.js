@@ -49,7 +49,6 @@ export const useGlobalStore = defineStore("user", {
     setReportDescription(description) {
       this.report.description = description;
     },
-
     setReportDate(date) {
       this.report.date = date;
     },

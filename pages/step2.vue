@@ -12,6 +12,7 @@ const images = ref([]);
 const displayedImages = ref([]);
 const imagesPerPage = 9;
 let currentPage = 1;
+const errors = ref(null);
 
 const selectedImages = ref([]);
 
@@ -89,7 +90,9 @@ console.log(selectedImages.value);
     <Stepper />
     <div class="pt-20 pb-20">
       <div class="content-container mx-auto grid grid-cols-12 justify-center">
-        <div class="col-start-1 col-end-7 grid grid-cols-3 h-max gap-2">
+        <div
+          class="col-start-1 col-end-7 grid grid-cols-3 max-h-96 overflow-y-scroll gap-2"
+        >
           <div
             v-for="(image, index) in displayedImages"
             :key="index"
@@ -104,17 +107,20 @@ console.log(selectedImages.value);
           </div>
 
           <button
+            class="p-2 border border-white rounded col-start-3 col-end-4"
             @click="loadMoreImages"
             v-if="displayedImages.length < images.length"
           >
             LOAD MORE
           </button>
         </div>
-        <div class="col-start-8 col-end-13 grid grid-cols-4 gap-1 h-max">
+        <div
+          class="col-start-8 col-end-13 grid grid-cols-3 h-max mb-4 w-full gap-1"
+        >
           <div
             v-for="image in selectedImages"
             :key="image.index"
-            class="w-24 h-24 overflow-hidden"
+            class="w-32 h-32 overflow-hidden"
           >
             <img
               @click="deleteImage(image.image, image.index)"
@@ -124,8 +130,9 @@ console.log(selectedImages.value);
             />
           </div>
         </div>
+
         <NuxtLink
-          class="rounded h-12 w-52 bg-slate-400 flex flex-col items-center justify-center"
+          class="rounded col-start-11 col-end-13 h-12 w-52 bg-slate-400 flex flex-col items-center justify-center"
           to="/step3"
           @click="updateImages"
           >NEXT STEP</NuxtLink
