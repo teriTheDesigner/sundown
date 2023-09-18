@@ -11,7 +11,6 @@ const longitude = ref(null);
 let currentTimestamp = ref(null);
 const map = ref(null);
 const markerLayer = ref(null);
-const apiKey = process.env.VUE_APP_MAP_API_KEY;
 
 const runtimeConfig = useRuntimeConfig();
 
