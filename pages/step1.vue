@@ -1,12 +1,15 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useGlobalStore } from "../store/user";
-const globalStore = useGlobalStore();
 
+const globalStore = useGlobalStore();
 const displayPage = ref(false);
 const reportName = ref();
 const reportDescription = ref();
 const reportDate = ref();
+const isButtonDisabled = computed(() => {
+  return !reportName.value || !reportDescription.value || !reportDate.value;
+});
 
 function updateUser() {
   console.log(reportName.value, reportDescription.value, reportDate.value);
@@ -18,11 +21,12 @@ function updateUser() {
 onMounted(() => {
   const user = localStorage.getItem("validUser");
   displayPage.value = user && user !== "undefined";
-
   reportName.value = globalStore.report.name;
   reportDescription.value = globalStore.report.description;
   reportDate.value = globalStore.report.date;
 });
+
+console.log(isButtonDisabled);
 </script>
 
 <template>
@@ -61,12 +65,24 @@ onMounted(() => {
               required
             />
           </label>
-          <NuxtLink
-            @click="updateUser"
-            class="rounded h-12 w-52 bg-slate-400 flex flex-col items-center justify-center"
-            to="/step2"
-            >NEXT STEP</NuxtLink
-          >
+          <div class="flex flex-col gap-4">
+            <p v-if="isButtonDisabled" class="text-sm text-red-500">
+              Please fill in all fields.
+            </p>
+            <NuxtLink to="/step2"
+              ><button
+                :disabled="isButtonDisabled"
+                @click="updateUser"
+                :class="{
+                  'bg-slate-400': !isButtonDisabled,
+                  'opacity-60': isButtonDisabled,
+                }"
+                class="rounded h-12 w-52 bg-slate-400 flex flex-col items-center justify-center"
+              >
+                NEXT STEP
+              </button></NuxtLink
+            >
+          </div>
         </div>
       </div>
     </div>
