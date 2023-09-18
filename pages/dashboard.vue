@@ -1,8 +1,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useGlobalStore } from "../store/user";
-
+import { useSteps } from "../store/stepper";
 const globalStore = useGlobalStore();
+const stepperStore = useSteps();
 const displayPage = ref(false);
 
 onMounted(() => {
@@ -27,6 +28,8 @@ function editReport(index) {
   console.log("adding report with index ", index);
   globalStore.report = globalStore.allReports[index];
   globalStore.allReports.splice(index, 1);
+  stepperStore.setStep("step1");
+  stepperStore.setEditMode(true);
 }
 function deleteReport(index) {
   globalStore.allReports.splice(index, 1);
@@ -37,6 +40,10 @@ function deleteReport(index) {
     userDataObj.allReports = globalStore.allReports;
     localStorage.setItem(globalStore.email, JSON.stringify(userDataObj));
   }
+}
+
+function changeStep() {
+  stepperStore.setStep("step1");
 }
 </script>
 
@@ -64,13 +71,13 @@ function deleteReport(index) {
                   <NuxtLink
                     @click="() => editReport(index)"
                     to="/step1"
-                    class="rounded h-8 p-4 bg-black text-white flex flex-col items-center justify-center"
+                    class="rounded hover:scale-105 h-8 p-4 bg-black text-white flex flex-col items-center justify-center"
                     >EDIT</NuxtLink
                   >
 
                   <button
                     @click="() => deleteReport(index)"
-                    class="rounded h-8 p-2 border border-black flex flex-col items-center justify-center"
+                    class="rounded hover:scale-105 h-8 p-2 border border-black flex flex-col items-center justify-center"
                   >
                     DELETE
                   </button>
@@ -80,7 +87,8 @@ function deleteReport(index) {
           </div>
         </div>
         <NuxtLink
-          class="col-start-9 col-end-13 rounded h-12 w-52 bg-white text-black flex flex-col items-center justify-center"
+          @click="changeStep"
+          class="col-start-9 col-end-13 hover:scale-105 rounded h-12 w-52 bg-white text-black flex flex-col items-center justify-center"
           to="/step1"
           >+ CREATE NEW REPORT</NuxtLink
         >

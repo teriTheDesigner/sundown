@@ -2,14 +2,18 @@
 import { ref, onMounted } from "vue";
 
 import { useGlobalStore } from "../store/user";
+import { useSteps } from "../store/stepper";
 const globalStore = useGlobalStore();
-
+const stepperStore = useSteps();
 const displayPage = ref(false);
 const latitude = ref(null);
 const longitude = ref(null);
 let currentTimestamp = ref(null);
 const map = ref(null);
 const markerLayer = ref(null);
+const apiKey = process.env.VUE_APP_MAP_API_KEY;
+
+const runtimeConfig = useRuntimeConfig();
 
 onMounted(async () => {
   const user = localStorage.getItem("validUser");
@@ -62,11 +66,12 @@ const loadOpenLayersLibrary = () => {
 };
 
 const createMap = () => {
+  const apiKey = runtimeConfig.public.VUE_APP_MAP_API_KEY;
   map.value = new ol.Map({
     layers: [
       new ol.layer.Tile({
         source: new ol.source.XYZ({
-          url: `https://api.maptiler.com/maps/basic-v2/256/{z}/{x}/{y}.png?key=00BVJaSkhTUVFkQcPsvf`,
+          url: `https://api.maptiler.com/maps/basic-v2/256/{z}/{x}/{y}.png?key=${apiKey}`,
         }),
       }),
     ],
@@ -119,6 +124,7 @@ function updateReport() {
   globalStore.setLongitude(longitude.value);
   globalStore.setLatitude(latitude.value);
   globalStore.setTimestamp(currentTimestamp);
+  stepperStore.setStep("step4");
 }
 </script>
 
@@ -151,7 +157,7 @@ function updateReport() {
           </label>
           <NuxtLink
             @click="updateReport"
-            class="rounded h-12 w-52 bg-slate-400 flex flex-col items-center justify-center"
+            class="rounded h-12 w-52 hover:scale-105 bg-white text-black flex flex-col items-center justify-center"
             to="/step4"
             >NEXT STEP</NuxtLink
           >

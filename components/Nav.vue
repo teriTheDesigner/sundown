@@ -1,10 +1,17 @@
 <script setup>
 import { useGlobalStore } from "../store/user";
+import { useSteps } from "../store/stepper";
 const globalStore = useGlobalStore();
+const stepperStore = useSteps();
 
 function Logout() {
   console.log("logout");
   localStorage.removeItem("validUser");
+  stepperStore.setStep("");
+}
+
+function changeStep() {
+  stepperStore.setStep("");
 }
 </script>
 
@@ -13,9 +20,13 @@ function Logout() {
     <div
       class="content-container place-items-center mx-auto flex justify-between"
     >
-      <NuxtLink to="/dashboard">LOGO</NuxtLink>
+      <NuxtLink class="hover:scale-105" @click="changeStep" to="/dashboard"
+        >LOGO</NuxtLink
+      >
       <div class="flex gap-8 place-items-center">
-        <NuxtLink to="/"><button @click="Logout">Logout</button></NuxtLink>
+        <NuxtLink class="hover:scale-105" to="/"
+          ><button @click="Logout">Logout</button></NuxtLink
+        >
         <div class="flex place-items-center gap-2">
           <img
             v-if="globalStore.avatar"

@@ -1,6 +1,6 @@
 <script setup>
-import { onMounted, ref } from "vue";
 import { useGlobalStore } from "../store/user";
+
 const globalStore = useGlobalStore();
 
 const email = ref("");
@@ -56,6 +56,7 @@ function Login() {
     globalStore.setFirstName(foundUser.first_name);
     globalStore.setLastName(foundUser.last_name);
     globalStore.setAvatar(foundUser.avatar);
+    useRouter().push("/dashboard");
   } else {
     userNotFound.value = true;
     console.log("email not found", userNotFound.value);
@@ -76,7 +77,8 @@ const isButtonDisabled = computed(() => {
       v-if="!userNotFound"
       class="content-container flex flex-col place-items-center m-auto"
     >
-      <div
+      <form
+        @submit.prevent="Login"
         class="flex rounded-xl flex-col bg-white text-black p-6 items-center justify-between m-auto w-80 h-80"
       >
         <label class="flex flex-col h-24 gap-2">
@@ -107,20 +109,18 @@ const isButtonDisabled = computed(() => {
             passwordError
           }}</span>
         </label>
-        <NuxtLink to="/dashboard"
-          ><button
-            @click="Login"
-            :disabled="isButtonDisabled"
-            :class="{
-              'bg-slate-400': !passwordError && !emailError,
-              'opacity-60': isButtonDisabled,
-            }"
-            class="rounded h-12 w-56 bg-slate-400"
-          >
-            LOGIN
-          </button></NuxtLink
+        <button
+          type="submit"
+          :disabled="isButtonDisabled"
+          :class="{
+            'bg-black': !passwordError && !emailError,
+            'opacity-60': isButtonDisabled,
+          }"
+          class="hover:scale-105 rounded h-12 w-56 bg-black text-white"
         >
-      </div>
+          LOGIN
+        </button>
+      </form>
     </div>
     <div
       v-if="userNotFound"

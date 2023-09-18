@@ -1,8 +1,10 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useGlobalStore } from "../store/user";
+import { useSteps } from "../store/stepper";
 
 const globalStore = useGlobalStore();
+const stepperStore = useSteps();
 const displayPage = ref(false);
 const reportName = ref();
 const reportDescription = ref();
@@ -16,6 +18,8 @@ function updateUser() {
   globalStore.setReportName(reportName.value);
   globalStore.setReportDescription(reportDescription.value);
   globalStore.setReportDate(reportDate.value);
+  stepperStore.setStep("step2");
+  useRouter().push("/step2");
 }
 
 onMounted(() => {
@@ -25,8 +29,6 @@ onMounted(() => {
   reportDescription.value = globalStore.report.description;
   reportDate.value = globalStore.report.date;
 });
-
-console.log(isButtonDisabled);
 </script>
 
 <template>
@@ -34,7 +36,10 @@ console.log(isButtonDisabled);
     <Nav></Nav>
     <Stepper />
     <div class="h-screen pt-20 pb-20">
-      <div class="content-container mx-auto grid grid-cols-12 justify-center">
+      <form
+        @submit.prevent="updateUser"
+        class="content-container mx-auto grid grid-cols-12 justify-center"
+      >
         <div class="col-start-1 col-end-6 flex flex-col gap-20">
           <label class="flex flex-col gap-4">
             Mission Name
@@ -69,22 +74,20 @@ console.log(isButtonDisabled);
             <p v-if="isButtonDisabled" class="text-sm text-red-500">
               Please fill in all fields.
             </p>
-            <NuxtLink to="/step2"
-              ><button
-                :disabled="isButtonDisabled"
-                @click="updateUser"
-                :class="{
-                  'bg-slate-400': !isButtonDisabled,
-                  'opacity-60': isButtonDisabled,
-                }"
-                class="rounded h-12 w-52 bg-slate-400 flex flex-col items-center justify-center"
-              >
-                NEXT STEP
-              </button></NuxtLink
+            <button
+              :disabled="isButtonDisabled"
+              type="submit"
+              :class="{
+                'hover:scale-105': !isButtonDisabled,
+                'opacity-60': isButtonDisabled,
+              }"
+              class="rounded h-12 w-52 bg-white text-black flex flex-col items-center justify-center"
             >
+              NEXT STEP
+            </button>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   </div>
   <div v-else class="h-screen flex place-items-center">

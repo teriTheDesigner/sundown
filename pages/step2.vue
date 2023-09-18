@@ -1,11 +1,11 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useGlobalStore } from "../store/user";
+import { useSteps } from "../store/stepper";
 const globalStore = useGlobalStore();
+const stepperStore = useSteps();
 
-const url =
-  "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?api_key=DEMO_KEY&sol=15";
-const apiKey = process.env.VUE_APP_API_KEY;
+const runtimeConfig = useRuntimeConfig();
 
 const displayPage = ref(false);
 const images = ref([]);
@@ -33,12 +33,11 @@ onMounted(() => {
 });
 
 const fetchImages = async () => {
+  const apiKey = runtimeConfig.public.VUE_APP_API_KEY;
   try {
-    const res = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-      },
-    });
+    const res = await fetch(
+      `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?api_key=${apiKey}&sol=15`
+    );
 
     if (res.ok) {
       const fetchedImages = await res.json();
@@ -84,15 +83,16 @@ const loadMoreImages = () => {
 
 function updateImages() {
   globalStore.setImages(selectedImages.value);
+  stepperStore.setStep("step3");
+  useRouter().push("/step3");
 }
-console.log(selectedImages.value);
 </script>
 
 <template>
   <div v-if="displayPage">
     <Nav></Nav>
     <Stepper />
-    <div class="pt-20 pb-20">
+    <form @submit.prevent="updateImages" class="pt-20 pb-20">
       <div class="content-container mx-auto grid grid-cols-12 justify-center">
         <div
           class="col-start-1 col-end-7 grid grid-cols-3 max-h-96 overflow-y-scroll gap-2"
@@ -112,7 +112,7 @@ console.log(selectedImages.value);
           </div>
 
           <button
-            class="p-2 border border-white rounded col-start-3 col-end-4"
+            class="p-2 border hover:scale-105 border-white rounded col-start-3 col-end-4"
             @click="loadMoreImages"
             v-if="displayedImages.length < images.length"
           >
@@ -131,7 +131,7 @@ console.log(selectedImages.value);
               @click="deleteImage(image.image, image.index)"
               :src="image.image.img_src"
               alt="mars image"
-              class="cursor-pointer object-cover w-full h-full"
+              class="hover:scale-105 cursor-pointer object-cover w-full h-full"
             />
           </div>
         </div>
@@ -139,30 +139,26 @@ console.log(selectedImages.value);
           <p v-if="isButtonDisabled" class="text-xs text-red-500">
             Please select images.
           </p>
-          <NuxtLink to="/step3"
-            ><button
-              class="rounded h-12 w-52 bg-slate-400 flex flex-col items-center justify-center"
-              @click="updateImages"
-              :disabled="isButtonDisabled"
-              :class="{
-                'bg-slate-400': !isButtonDisabled,
-                'opacity-60': isButtonDisabled,
-              }"
-            >
-              NEXT STEP
-            </button></NuxtLink
+          <button
+            class="rounded h-12 w-52 bg-white text-black flex flex-col items-center justify-center"
+            type="submit"
+            :disabled="isButtonDisabled"
+            :class="{
+              'hover:scale-105': !isButtonDisabled,
+              'opacity-60': isButtonDisabled,
+            }"
           >
+            NEXT STEP
+          </button>
         </div>
       </div>
-    </div>
+    </form>
   </div>
   <div v-else class="h-screen flex place-items-center">
     <div class="m-auto flex flex-col place-items-center gap-20">
       <h1 class="text-3xl">This page is protected</h1>
-      <NuxtLink to="/"
-        ><button class="rounded h-12 w-48 bg-white text-black">
-          LOGIN
-        </button></NuxtLink
+      <NuxtLink class="rounded h-12 w-48 bg-white text-black" to="/">
+        LOGIN</NuxtLink
       >
     </div>
   </div>

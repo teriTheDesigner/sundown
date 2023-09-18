@@ -1,8 +1,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useGlobalStore } from "../store/user";
+import { useSteps } from "../store/stepper";
 const globalStore = useGlobalStore();
-
+const stepperStore = useSteps();
 const displayPage = ref(false);
 
 onMounted(() => {
@@ -12,6 +13,8 @@ onMounted(() => {
 function saveReport() {
   globalStore.addReport();
   saveUserDataToLocalStorage();
+  stepperStore.setStep("");
+  stepperStore.setEditMode(false);
 }
 function saveUserDataToLocalStorage() {
   const userData = {
@@ -75,7 +78,7 @@ function saveUserDataToLocalStorage() {
         </div>
         <NuxtLink
           @click="saveReport"
-          class="rounded col-start-11 col-end-13 h-12 w-52 bg-slate-400 flex flex-col items-center justify-center"
+          class="rounded col-start-11 col-end-13 h-12 w-52 hover:scale-105 bg-white text-black flex flex-col items-center justify-center"
           to="/dashboard"
           >SAVE REPORT</NuxtLink
         >
