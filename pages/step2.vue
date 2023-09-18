@@ -12,9 +12,12 @@ const images = ref([]);
 const displayedImages = ref([]);
 const imagesPerPage = 9;
 let currentPage = 1;
-const errors = ref(null);
 
 const selectedImages = ref([]);
+
+const isButtonDisabled = computed(() => {
+  return selectedImages.value.length === 0;
+});
 
 onMounted(() => {
   const user = localStorage.getItem("validUser");
@@ -64,9 +67,10 @@ function deleteImage(image, index) {
 }
 
 function selectImages(image, index) {
-  selectedImages.value.push({ image, index });
+  if (selectedImages.value.length < 7) {
+    selectedImages.value.push({ image, index });
+  }
 }
-
 const updateDisplayedImages = () => {
   const startIndex = (currentPage - 1) * imagesPerPage;
   const endIndex = startIndex + imagesPerPage;
@@ -103,6 +107,7 @@ console.log(selectedImages.value);
               :src="image.img_src"
               alt="mars image"
               class="object-cover w-full h-full"
+              :class="{ 'cursor-pointer': selectedImages.length < 7 }"
             />
           </div>
 
@@ -126,17 +131,28 @@ console.log(selectedImages.value);
               @click="deleteImage(image.image, image.index)"
               :src="image.image.img_src"
               alt="mars image"
-              class="object-cover w-full h-full"
+              class="cursor-pointer object-cover w-full h-full"
             />
           </div>
         </div>
-
-        <NuxtLink
-          class="rounded col-start-11 col-end-13 h-12 w-52 bg-slate-400 flex flex-col items-center justify-center"
-          to="/step3"
-          @click="updateImages"
-          >NEXT STEP</NuxtLink
-        >
+        <div class="col-start-11 col-end-13 flex flex-col gap-2">
+          <p v-if="isButtonDisabled" class="text-xs text-red-500">
+            Please select images.
+          </p>
+          <NuxtLink to="/step3"
+            ><button
+              class="rounded h-12 w-52 bg-slate-400 flex flex-col items-center justify-center"
+              @click="updateImages"
+              :disabled="isButtonDisabled"
+              :class="{
+                'bg-slate-400': !isButtonDisabled,
+                'opacity-60': isButtonDisabled,
+              }"
+            >
+              NEXT STEP
+            </button></NuxtLink
+          >
+        </div>
       </div>
     </div>
   </div>
