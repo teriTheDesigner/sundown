@@ -44,7 +44,7 @@ onMounted(() => {
             Mission Name
             <input
               v-model="reportName"
-              class="border text-black p-2 h-12 border-gray-600"
+              class="border text-black p-2 h-12 focus:outline-gray-600 border-gray-600"
               type="text"
               required
             />
@@ -53,7 +53,7 @@ onMounted(() => {
             Mission Description
             <textarea
               v-model="reportDescription"
-              class="border text-black p-2 border-gray-600 h-32"
+              class="border focus:outline-gray-600 text-black p-2 border-gray-600 h-32"
               type="text"
               required
             ></textarea>
@@ -64,7 +64,7 @@ onMounted(() => {
             Mission Date
             <input
               v-model="reportDate"
-              class="border text-black p-2 border-gray-600 h-12"
+              class="border focus:outline-gray-600 text-black p-2 border-gray-600 h-12"
               type="date"
               required
             />

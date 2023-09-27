@@ -34,7 +34,7 @@ function saveUserDataToLocalStorage() {
 }
 </script>
 <template>
-  <div v-if="displayPage" class="h-screen">
+  <div v-if="displayPage">
     <Nav></Nav>
     <Stepper />
     <div class="pt-20 pb-20">

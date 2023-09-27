@@ -88,7 +88,7 @@ const isButtonDisabled = computed(() => {
         <label class="flex flex-col h-1/3 gap-2">
           E-mail:
           <input
-            class="border p-2 w-56 border-gray-600"
+            class="border p-2 w-56 focus:outline-gray-600 border-gray-600"
             v-model="email"
             v-on:blur="(e) => emailBlur(e.target.value)"
             v-on:focus="emailFocus"
@@ -102,7 +102,7 @@ const isButtonDisabled = computed(() => {
         <label class="flex flex-col h-1/3 gap-2">
           Password:
           <input
-            class="border p-2 w-56 border-gray-600"
+            class="border p-2 w-56 border-gray-600 focus:outline-gray-600"
             v-on:blur="(e) => passwordBlur(e.target.value)"
             v-on:focus="passwordFocus"
             v-model="password"

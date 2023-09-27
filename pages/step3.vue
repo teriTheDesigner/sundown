@@ -36,7 +36,6 @@ onMounted(async () => {
 });
 
 const fetchISSLocation = async () => {
-  console.log("Timestamp in fetchISSLocation 1:", currentTimestamp.value);
   let targetTimestamp = currentTimestamp.value
     ? Math.floor(currentTimestamp.value)
     : Math.floor(Date.now() / 3000);
@@ -50,7 +49,6 @@ const fetchISSLocation = async () => {
       latitude.value = data.latitude;
       longitude.value = data.longitude;
       currentTimestamp.value = targetTimestamp;
-      console.log("Timestamp in fetchISSLocation 2:", currentTimestamp.value);
 
       // Update the map with new coordinates
       updateMap();
@@ -157,7 +155,7 @@ function updateReport() {
 </script>
 
 <template>
-  <div v-if="displayPage" class="h-screen">
+  <div v-if="displayPage">
     <Nav></Nav>
     <Stepper />
     <div class="pt-20 pb-20">
@@ -167,7 +165,7 @@ function updateReport() {
           <label class="flex flex-col gap-4"
             >Latitude:
             <input
-              class="border text-black p-2 border-gray-600 h-12"
+              class="border focus:outline-gray-600 text-black p-2 border-gray-600 h-12"
               type="text"
               readonly
               v-model="latitude"
@@ -177,7 +175,7 @@ function updateReport() {
           <label class="flex flex-col gap-4"
             >Longitude:
             <input
-              class="border text-black p-2 border-gray-600 h-12"
+              class="border focus:outline-gray-600 text-black p-2 border-gray-600 h-12"
               type="text"
               readonly
               v-model="longitude"
