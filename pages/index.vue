@@ -73,15 +73,18 @@ const isButtonDisabled = computed(() => {
   <div
     class="h-screen backgroundImg text-white flex flex-col place-items-center"
   >
-    <div
-      v-if="!userNotFound"
-      class="content-container flex flex-col place-items-center m-auto"
-    >
+    <div class="content-container flex flex-col place-items-center m-auto">
       <form
         @submit.prevent="Login"
-        class="flex rounded-xl flex-col bg-white text-black p-6 items-center justify-between m-auto w-80 h-80"
+        class="flex rounded-xl flex-col bg-white text-black p-6 items-center justify-between m-auto w-80 h-96"
       >
-        <label class="flex flex-col h-24 gap-2">
+        <div class="p-6">
+          <p class="text-xs text-red-600" v-if="userNotFound">
+            Please enter a correct email and password
+          </p>
+        </div>
+
+        <label class="flex flex-col h-1/3 gap-2">
           E-mail:
           <input
             class="border p-2 w-56 border-gray-600"
@@ -95,7 +98,7 @@ const isButtonDisabled = computed(() => {
             emailError
           }}</span>
         </label>
-        <label class="flex flex-col h-24 gap-2">
+        <label class="flex flex-col h-1/3 gap-2">
           Password:
           <input
             class="border p-2 w-56 border-gray-600"
@@ -122,19 +125,19 @@ const isButtonDisabled = computed(() => {
         </button>
       </form>
     </div>
-    <div
+    <!-- <div
       v-if="userNotFound"
-      class="fixed inset-0 flex items-center justify-center"
+      class="fixed inset-0 flex modal bg-black bg-opacity-50 items-center justify-center"
     >
-      <div class="modal bg-black bg-opacity-50 p-6 rounded-xl text-white">
+      <div class="modal bg-white p-12 rounded-xl text-black">
         <p>Email not found.</p>
         <button
           @click="userNotFound = false"
-          class="mt-4 px-4 py-2 bg-slate-400 rounded"
+          class="mt-4 px-4 py-2 bg-black text-white rounded"
         >
           Close
         </button>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
