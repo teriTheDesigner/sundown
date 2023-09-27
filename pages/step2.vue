@@ -14,7 +14,6 @@ const imagesPerPage = 9;
 let currentPage = 1;
 
 const selectedImages = ref([]);
-
 const isButtonDisabled = computed(() => {
   return selectedImages.value.length === 0;
 });
@@ -89,7 +88,7 @@ function updateImages() {
 </script>
 
 <template>
-  <div v-if="displayPage">
+  <div v-if="displayPage" class="h-screen">
     <Nav></Nav>
     <Stepper />
     <form @submit.prevent="updateImages" class="pt-20 pb-20">
@@ -112,6 +111,7 @@ function updateImages() {
           </div>
 
           <button
+            type="button"
             class="p-2 border hover:scale-105 border-white rounded col-start-3 col-end-4"
             @click="loadMoreImages"
             v-if="displayedImages.length < images.length"

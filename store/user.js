@@ -43,7 +43,6 @@ export const useGlobalStore = defineStore("user", {
       this.avatar = avatar;
     },
     setReportName(name) {
-      console.log(name);
       this.report.name = name;
     },
     setReportDescription(description) {

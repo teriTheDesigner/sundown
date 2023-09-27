@@ -128,7 +128,7 @@ function updateReport() {
 </script>
 
 <template>
-  <div v-if="displayPage">
+  <div v-if="displayPage" class="h-screen">
     <Nav></Nav>
     <Stepper />
     <div class="pt-20 pb-20">

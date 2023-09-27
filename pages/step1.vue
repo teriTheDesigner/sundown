@@ -14,7 +14,6 @@ const isButtonDisabled = computed(() => {
 });
 
 function updateUser() {
-  console.log(reportName.value, reportDescription.value, reportDate.value);
   globalStore.setReportName(reportName.value);
   globalStore.setReportDescription(reportDescription.value);
   globalStore.setReportDate(reportDate.value);
