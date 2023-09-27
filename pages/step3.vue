@@ -14,6 +14,8 @@ const markerLayer = ref(null);
 
 const runtimeConfig = useRuntimeConfig();
 
+currentTimestamp.value = globalStore.report.timestamp;
+
 onMounted(async () => {
   const user = localStorage.getItem("validUser");
   displayPage.value = user && user !== "undefined";
@@ -21,24 +23,34 @@ onMounted(async () => {
   if (displayPage.value) {
     await loadOpenLayersLibrary();
     createMap();
-    fetchISSLocation();
-    setInterval(fetchISSLocation, 60000);
+    if (currentTimestamp.value) {
+      fetchISSLocation();
+    } else {
+      fetchISSLocation();
+      setInterval(() => {
+        currentTimestamp.value = null;
+        fetchISSLocation();
+      }, 20000);
+    }
   }
 });
 
 const fetchISSLocation = async () => {
-  const timestamp = Date.now();
-  const unixTimestamp = Math.floor(timestamp / 3000);
+  console.log("Timestamp in fetchISSLocation 1:", currentTimestamp.value);
+  let targetTimestamp = currentTimestamp.value
+    ? Math.floor(currentTimestamp.value)
+    : Math.floor(Date.now() / 3000);
 
   try {
     const response = await fetch(
-      `https://api.wheretheiss.at/v1/satellites/25544?timestamp=${unixTimestamp}`
+      `https://api.wheretheiss.at/v1/satellites/25544?timestamp=${targetTimestamp}`
     );
     if (response.ok) {
       const data = await response.json();
       latitude.value = data.latitude;
       longitude.value = data.longitude;
-      currentTimestamp = unixTimestamp;
+      currentTimestamp.value = targetTimestamp;
+      console.log("Timestamp in fetchISSLocation 2:", currentTimestamp.value);
 
       // Update the map with new coordinates
       updateMap();
@@ -119,6 +131,23 @@ const updateMap = () => {
   }
 };
 
+const fetchCurrentPosition = async () => {
+  currentTimestamp.value = null;
+
+  console.log("Timestamp in Fetch current location:", currentTimestamp.value);
+  await fetchISSLocation();
+};
+
+const updateReportWithCurrentPosition = () => {
+  currentTimestamp.value = null;
+
+  console.log(
+    "Timestamp in updateReportWithCurrentPosition:",
+    currentTimestamp.value
+  );
+  fetchCurrentPosition();
+};
+
 function updateReport() {
   globalStore.setLongitude(longitude.value);
   globalStore.setLatitude(latitude.value);
@@ -154,6 +183,12 @@ function updateReport() {
               v-model="longitude"
             />
           </label>
+          <button
+            class="rounded h-12 w-52 hover:scale-105 bg-white text-black flex flex-col items-center justify-center"
+            @click="updateReportWithCurrentPosition"
+          >
+            CURRENT POSITION
+          </button>
           <NuxtLink
             @click="updateReport"
             class="rounded h-12 w-52 hover:scale-105 bg-white text-black flex flex-col items-center justify-center"

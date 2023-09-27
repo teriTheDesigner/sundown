@@ -79,6 +79,7 @@ const isButtonDisabled = computed(() => {
         class="flex rounded-xl flex-col bg-white text-black p-6 items-center justify-between m-auto w-80 h-96"
       >
         <div class="p-6">
+          <p v-if="!userNotFound">LOGIN</p>
           <p class="text-xs text-red-600" v-if="userNotFound">
             Please enter a correct email and password
           </p>
