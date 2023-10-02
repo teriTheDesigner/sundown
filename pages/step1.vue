@@ -53,7 +53,7 @@ onMounted(() => {
             Mission Description
             <textarea
               v-model="reportDescription"
-              class="border focus:outline-gray-600 text-black p-2 border-gray-600 h-32"
+              class="border focus:outline-gray-600 text-black p-2 border-gray-600 h-60"
               type="text"
               required
             ></textarea>

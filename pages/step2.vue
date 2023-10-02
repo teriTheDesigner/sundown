@@ -93,13 +93,11 @@ function updateImages() {
     <Stepper />
     <form @submit.prevent="updateImages" class="pt-20 pb-20">
       <div class="content-container mx-auto grid grid-cols-12 justify-center">
-        <div
-          class="col-start-1 col-end-7 grid grid-cols-3 max-h-96 overflow-y-scroll gap-2"
-        >
+        <div class="col-start-1 col-end-7 grid grid-cols-3 gap-2">
           <div
             v-for="(image, index) in displayedImages"
             :key="index"
-            class="w-40 h-40 overflow-hidden"
+            class="aspect-square"
           >
             <img
               @click="selectImages(image, index)"
@@ -109,23 +107,23 @@ function updateImages() {
               :class="{ 'cursor-pointer': selectedImages.length < 7 }"
             />
           </div>
-
-          <button
-            type="button"
-            class="p-2 border hover:scale-105 border-white rounded col-start-3 col-end-4"
-            @click="loadMoreImages"
-            v-if="displayedImages.length < images.length"
-          >
-            LOAD MORE
-          </button>
         </div>
+
+        <button
+          type="button"
+          class="p-2 border h-12 hover:scale-105 border-white rounded mt-4 col-start-5 col-span-2"
+          @click="loadMoreImages"
+          v-if="displayedImages.length < images.length"
+        >
+          LOAD MORE
+        </button>
         <div
-          class="col-start-8 col-end-13 grid grid-cols-3 h-max mb-4 w-full gap-1"
+          class="col-start-8 col-span-5 grid grid-cols-3 h-max w-full gap-2 row-start-1"
         >
           <div
             v-for="image in selectedImages"
             :key="image.index"
-            class="w-32 h-32 overflow-hidden"
+            class="aspect-square overflow-hidden"
           >
             <img
               @click="deleteImage(image.image, image.index)"
@@ -134,22 +132,22 @@ function updateImages() {
               class="hover:scale-105 cursor-pointer object-cover w-full h-full"
             />
           </div>
-        </div>
-        <div class="col-start-11 col-end-13 flex flex-col gap-2">
-          <p v-if="isButtonDisabled" class="text-xs text-red-500">
-            Please select images.
-          </p>
-          <button
-            class="rounded h-12 w-52 bg-white text-black flex flex-col items-center justify-center"
-            type="submit"
-            :disabled="isButtonDisabled"
-            :class="{
-              'hover:scale-105': !isButtonDisabled,
-              'opacity-60': isButtonDisabled,
-            }"
-          >
-            NEXT STEP
-          </button>
+          <div class="col-start-2 col-span-2 flex flex-col gap-2 mt-4">
+            <p v-if="isButtonDisabled" class="text-xs text-red-500">
+              Please select images.
+            </p>
+            <button
+              class="rounded h-12 bg-white text-black flex flex-col items-center justify-center"
+              type="submit"
+              :disabled="isButtonDisabled"
+              :class="{
+                'hover:scale-105': !isButtonDisabled,
+                'opacity-60': isButtonDisabled,
+              }"
+            >
+              NEXT STEP
+            </button>
+          </div>
         </div>
       </div>
     </form>
