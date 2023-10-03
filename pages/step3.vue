@@ -30,7 +30,7 @@ onMounted(async () => {
       setInterval(() => {
         currentTimestamp.value = null;
         fetchISSLocation();
-      }, 20000);
+      }, 10000);
     }
   }
 });
@@ -132,17 +132,11 @@ const updateMap = () => {
 const fetchCurrentPosition = async () => {
   currentTimestamp.value = null;
 
-  console.log("Timestamp in Fetch current location:", currentTimestamp.value);
   await fetchISSLocation();
 };
 
 const updateReportWithCurrentPosition = () => {
   currentTimestamp.value = null;
-
-  console.log(
-    "Timestamp in updateReportWithCurrentPosition:",
-    currentTimestamp.value
-  );
   fetchCurrentPosition();
 };
 

@@ -71,7 +71,7 @@ onMounted(() => {
           </label>
           <div class="flex flex-col gap-4">
             <p v-if="isButtonDisabled" class="text-sm text-red-500">
-              Please fill in all fields.
+              <b> Please fill in all fields.</b>
             </p>
             <button
               :disabled="isButtonDisabled"

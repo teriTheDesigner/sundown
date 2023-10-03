@@ -25,7 +25,6 @@ onMounted(() => {
 });
 
 function editReport(index) {
-  console.log("adding report with index ", index);
   globalStore.report = globalStore.allReports[index];
   globalStore.allReports.splice(index, 1);
   stepperStore.setStep("step1");

@@ -61,7 +61,6 @@ function deleteImage(image, index) {
       selectedImages.value.splice(itemIndex, 1);
     }
   }
-  console.log("removing image", image, "with index", index);
 }
 
 function selectImages(image, index) {
@@ -117,27 +116,27 @@ function updateImages() {
         >
           LOAD MORE
         </button>
-        <div
-          class="col-start-8 col-span-5 grid grid-cols-3 h-max w-full gap-2 row-start-1"
-        >
-          <div
-            v-for="image in selectedImages"
-            :key="image.index"
-            class="aspect-square overflow-hidden"
-          >
-            <img
-              @click="deleteImage(image.image, image.index)"
-              :src="image.image.img_src"
-              alt="mars image"
-              class="hover:scale-105 cursor-pointer object-cover w-full h-full"
-            />
+        <div class="col-start-8 col-span-5 row-start-1">
+          <div class="grid grid-cols-3 h-max w-full gap-2">
+            <div
+              v-for="image in selectedImages"
+              :key="image.index"
+              class="aspect-square overflow-hidden"
+            >
+              <img
+                @click="deleteImage(image.image, image.index)"
+                :src="image.image.img_src"
+                alt="mars image"
+                class="hover:scale-105 cursor-pointer object-cover w-full h-full"
+              />
+            </div>
           </div>
-          <div class="col-start-2 col-span-2 flex flex-col gap-2 mt-4">
+          <div class="flex flex-col gap-2 mt-4">
             <p v-if="isButtonDisabled" class="text-xs text-red-500">
-              Please select images.
+              <b>Please select 1 - 7 images.</b>
             </p>
             <button
-              class="rounded h-12 bg-white text-black flex flex-col items-center justify-center"
+              class="rounded h-12 w-1/3 bg-white text-black flex flex-col items-center justify-center"
               type="submit"
               :disabled="isButtonDisabled"
               :class="{
