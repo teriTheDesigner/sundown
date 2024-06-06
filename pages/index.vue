@@ -1,5 +1,8 @@
 <script setup>
 import { useGlobalStore } from "../store/user";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const globalStore = useGlobalStore();
 
@@ -70,7 +73,7 @@ const isButtonDisabled = computed(() => {
 });
 </script>
 <template>
-  <div
+  <!-- <div
     class="h-screen backgroundImg text-white flex flex-col place-items-center"
   >
     <div class="content-container flex flex-col place-items-center m-auto">
@@ -126,7 +129,7 @@ const isButtonDisabled = computed(() => {
         </button>
       </form>
     </div>
-    <!-- <div
+   <div
       v-if="userNotFound"
       class="fixed inset-0 flex modal bg-black bg-opacity-50 items-center justify-center"
     >
@@ -139,6 +142,57 @@ const isButtonDisabled = computed(() => {
           Close
         </button>
       </div>
-    </div> -->
+    </div> 
+  </div> -->
+  <div class="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
+    <form
+      @submit.prevent="Login"
+      class="flex items-center justify-center py-12"
+    >
+      <div
+        class="mx-auto border border-gray-500 rounded-xl grid w-[350px] p-4 md:p-8 md:w-[400px] gap-6"
+      >
+        <div class="grid gap-2">
+          <h1 class="text-3xl font-bold mb-2">Login</h1>
+          <p class="text-gray-300 text-sm mb-2">
+            Enter your email below to login to your account
+          </p>
+        </div>
+        <div class="grid gap-6">
+          <div class="grid gap-2">
+            <Label for="email">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="m@example.com"
+              required
+              class="bg-black border-gray-500"
+            />
+          </div>
+          <div class="grid gap-2">
+            <div class="flex items-center">
+              <Label for="password">Password</Label>
+            </div>
+            <Input
+              id="password"
+              class="bg-black border-gray-500"
+              type="password"
+              placeholder="password"
+              required
+            />
+          </div>
+          <Button type="submit" class="w-full bg-white text-black">
+            Login
+          </Button>
+        </div>
+      </div>
+    </form>
+    <div class="hidden bg-muted lg:block">
+      <img
+        src="../assets/img/astronaut2.jpg"
+        alt="Image"
+        class="h-full w-full object-cover"
+      />
+    </div>
   </div>
 </template>
