@@ -338,12 +338,12 @@ function changeStep() {
                               <DropdownMenuItem class="cursor-pointer"
                                 >Open</DropdownMenuItem
                               >
-                              <DropdownMenuItem class="cursor-pointer"
-                                ><NuxtLink
-                                  @click="() => editReport(index)"
-                                  to="/step1"
-                                  >Edit</NuxtLink
-                                ></DropdownMenuItem
+                              <NuxtLink
+                                @click="() => editReport(index)"
+                                to="/step1"
+                                ><DropdownMenuItem class="cursor-pointer"
+                                  >Edit</DropdownMenuItem
+                                ></NuxtLink
                               >
                               <DropdownMenuSeparator />
                               <DropdownMenuItem
