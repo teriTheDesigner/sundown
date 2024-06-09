@@ -1,21 +1,11 @@
 <script setup>
 import {
-  CircleUser,
   Copy,
   CreditCard,
   File,
-  Home,
-  LineChart,
   ListFilter,
   MoreVertical,
-  Package,
-  Package2,
-  PanelLeft,
-  Search,
-  Settings,
-  ShoppingCart,
   Truck,
-  Users2,
 } from "lucide-vue-next";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -82,6 +72,7 @@ onMounted(() => {
 });
 
 function editReport(index) {
+  console.log("editing report", index);
   globalStore.report = globalStore.allReports[index];
   globalStore.allReports.splice(index, 1);
   stepperStore.setStep("step1");
@@ -104,7 +95,7 @@ function changeStep() {
 </script>
 
 <template>
-  <div class="ml-10 mr-10" v-if="displayPage">
+  <!-- <div class="ml-10 mr-10" v-if="displayPage">
     <Nav></Nav>
     <div class="pt-20 pb-20 h-screen">
       <div class="content-container mx-auto grid grid-cols-12">
@@ -160,54 +151,67 @@ function changeStep() {
         </button></NuxtLink
       >
     </div>
-  </div>
-  <!-- <Sheet class="bg-[#151518] pb-12">
+  </div> -->
+  <Sheet class="bg-[#151518] pb-12">
     <Nav class="ml-10 mr-10"></Nav>
+
     <main
       class="dark grid max-w-[1300px] m-auto pb-12 flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-2 xl:grid-cols-2"
     >
+      <h1
+        class="text-xl xl:text-3xl lg:col-start-1 lg:col-end-3 mx-auto font-bold"
+      >
+        Welcome back, {{ globalStore.codeName }} !
+      </h1>
+      <p class="mx-auto lg:col-start-1 lg:col-end-3 text-gray-400 italic">
+        “The universe is not only stranger than we imagine, it is stranger than
+        we can imagine.”
+      </p>
       <div class="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
         <div
           class="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4"
         >
           <Card class="sm:col-span-2">
             <CardHeader class="pb-3">
-              <CardTitle>Your Orders</CardTitle>
+              <CardTitle class="pb-3">Your Space Mission Reports ✨</CardTitle>
               <CardDescription class="max-w-lg text-balance leading-relaxed">
-                Introducing Our Dynamic Orders Dashboard for Seamless Management
-                and Insightful Analysis.
+                In this Dashboard you can manage your reports, edit, delete, or
+                create new ones
               </CardDescription>
             </CardHeader>
             <CardFooter>
-              <Button>Create New Order</Button>
+              <Button>
+                <NuxtLink @click="changeStep" to="/step1"
+                  >Create New Report</NuxtLink
+                ></Button
+              >
+            </CardFooter>
+          </Card>
+
+          <Card>
+            <CardHeader class="pb-2">
+              <CardDescription>Current Altitude of ISS</CardDescription>
+              <CardTitle class="xl:text-4xl"> 424.03 km </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div class="text-xs text-gray-400">Above Earth's Surface</div>
+            </CardContent>
+            <CardFooter>
+              <Progress :model-value="75" aria-label="Altitude Level" />
             </CardFooter>
           </Card>
           <Card>
             <CardHeader class="pb-2">
-              <CardDescription>This Week</CardDescription>
-              <CardTitle class="text-4xl"> $1329 </CardTitle>
+              <CardDescription>Current Velocity</CardDescription>
+              <CardTitle class="xl:text-3xl text-xl">
+                27,573.62 km/h
+              </CardTitle>
             </CardHeader>
             <CardContent>
-              <div class="text-xs text-muted-foreground">
-                +25% from last week
-              </div>
+              <div class="text-xs text-gray-400">Speed of ISS</div>
             </CardContent>
             <CardFooter>
-              <Progress :model-value="25" aria-label="25% increase" />
-            </CardFooter>
-          </Card>
-          <Card>
-            <CardHeader class="pb-2">
-              <CardDescription>This Month</CardDescription>
-              <CardTitle class="text-3xl"> $5,329 </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div class="text-xs text-muted-foreground">
-                +10% from last month
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Progress :model-value="12" aria-label="12% increase" />
+              <Progress :model-value="50" aria-label="Velocity Level" />
             </CardFooter>
           </Card>
         </div>
@@ -240,7 +244,7 @@ function changeStep() {
                         for="terms2"
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                       >
-                        Fulfilled
+                        Successful
                       </label>
                     </div>
                   </DropdownMenuItem>
@@ -252,17 +256,6 @@ function changeStep() {
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                       >
                         Declined
-                      </label>
-                    </div>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <div class="items-top flex space-x-2">
-                      <Checkbox id="terms1" />
-                      <label
-                        for="terms2"
-                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                      >
-                        Refunded
                       </label>
                     </div>
                   </DropdownMenuItem>
@@ -281,92 +274,88 @@ function changeStep() {
           <TabsContent value="week">
             <Card>
               <CardHeader class="px-7">
-                <CardTitle>Orders</CardTitle>
+                <CardTitle>Mission Reports</CardTitle>
                 <CardDescription>
-                  Recent orders from your store.
+                  Recent missions created by you
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <Table>
                   <TableHeader>
-                    <TableRow>
-                      <TableHead>Customer</TableHead>
-                      <TableHead class="hidden sm:table-cell"> Type </TableHead>
+                    <TableRow class="hover:bg-black">
+                      <TableHead>Mission ID</TableHead>
                       <TableHead class="hidden sm:table-cell">
-                        Status
+                        Mission Name
                       </TableHead>
-                      <TableHead class="hidden md:table-cell"> Date </TableHead>
-                      <TableHead class="text-right"> Amount </TableHead>
+                      <TableHead class="hidden sm:table-cell">
+                        Mission Date
+                      </TableHead>
+                      <TableHead class="hidden md:table-cell">
+                        Images</TableHead
+                      >
+                      <TableHead class="hidden md:table-cell">
+                        Status</TableHead
+                      >
+                      <TableHead class="text-right"> Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     <SheetTrigger as-child>
-                      <TableRow class="bg-accent">
-                        <TableCell>
-                          <div class="font-medium">Liam Johnson</div>
-                          <div
-                            class="hidden text-sm text-muted-foreground md:inline"
-                          >
-                            liam@example.com
-                          </div>
+                      <TableRow
+                        v-for="(report, index) in globalStore.allReports"
+                        :key="index"
+                        class="cursor-pointer"
+                      >
+                        <TableCell> ID 676-75-34{{ report.id }} </TableCell>
+                        <TableCell class="hidden sm:table-cell">
+                          {{ report.name }}
                         </TableCell>
                         <TableCell class="hidden sm:table-cell">
-                          Sale
-                        </TableCell>
-                        <TableCell class="hidden sm:table-cell">
+                          {{ report.date }}</TableCell
+                        >
+                        <TableCell class="hidden md:table-cell">
+                          {{ report.images.length }}</TableCell
+                        >
+                        <TableCell class="hidden md:table-cell">
                           <Badge class="text-xs" variant="secondary">
-                            Fulfilled
+                            Successful
                           </Badge>
                         </TableCell>
-                        <TableCell class="hidden md:table-cell">
-                          2023-06-23
-                        </TableCell>
-                        <TableCell class="text-right"> $250.00 </TableCell>
+                        <TableCell class="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger as-child>
+                              <Button
+                                size="icon"
+                                variant="outline"
+                                class="h-8 w-8"
+                                @click.stop
+                              >
+                                <MoreVertical class="h-3.5 w-3.5" />
+                                <span class="sr-only">More</span>
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem class="cursor-pointer"
+                                >Open</DropdownMenuItem
+                              >
+                              <DropdownMenuItem class="cursor-pointer"
+                                ><NuxtLink
+                                  @click="() => editReport(index)"
+                                  to="/step1"
+                                  >Edit</NuxtLink
+                                ></DropdownMenuItem
+                              >
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem
+                                class="cursor-pointer"
+                                @click="() => deleteReport(index)"
+                                >Delete</DropdownMenuItem
+                              >
+                            </DropdownMenuContent>
+                          </DropdownMenu></TableCell
+                        >
                       </TableRow></SheetTrigger
                     >
-                    <TableRow>
-                      <TableCell>
-                        <div class="font-medium">Olivia Smith</div>
-                        <div
-                          class="hidden text-sm text-muted-foreground md:inline"
-                        >
-                          olivia@example.com
-                        </div>
-                      </TableCell>
-                      <TableCell class="hidden sm:table-cell">
-                        Refund
-                      </TableCell>
-                      <TableCell class="hidden sm:table-cell">
-                        <Badge class="text-xs" variant="outline">
-                          Declined
-                        </Badge>
-                      </TableCell>
-                      <TableCell class="hidden md:table-cell">
-                        2023-06-24
-                      </TableCell>
-                      <TableCell class="text-right"> $150.00 </TableCell>
-                    </TableRow>
-
-                    <TableRow>
-                      <TableCell>
-                        <div class="font-medium">Emma Brown</div>
-                        <div
-                          class="hidden text-sm text-muted-foreground md:inline"
-                        >
-                          emma@example.com
-                        </div>
-                      </TableCell>
-                      <TableCell class="hidden sm:table-cell"> Sale </TableCell>
-                      <TableCell class="hidden sm:table-cell">
-                        <Badge class="text-xs" variant="secondary">
-                          Fulfilled
-                        </Badge>
-                      </TableCell>
-                      <TableCell class="hidden md:table-cell">
-                        2023-06-26
-                      </TableCell>
-                      <TableCell class="text-right"> $450.00 </TableCell>
-                    </TableRow>
                   </TableBody>
                 </Table>
               </CardContent>
@@ -376,7 +365,7 @@ function changeStep() {
       </div>
       <SheetContent class="dark p-0 bg-black border-[#27272A]">
         <div>
-          <Card class="overflow-hidden border-none rounded-none">
+          <!-- <Card class="overflow-hidden border-none rounded-none">
             <CardHeader class="flex flex-row items-start bg-[#18181A]">
               <div class="grid gap-0.5">
                 <CardTitle class="group flex items-center gap-2 text-lg">
@@ -520,9 +509,9 @@ function changeStep() {
                 </PaginationList>
               </Pagination>
             </CardFooter>
-          </Card>
+          </Card> -->
         </div>
       </SheetContent>
     </main>
-  </Sheet> -->
+  </Sheet>
 </template>
