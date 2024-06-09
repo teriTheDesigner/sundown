@@ -31,7 +31,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-if="displayPage">
+  <div class="ml-10 mr-10" v-if="displayPage">
     <Nav></Nav>
     <Stepper />
     <div class="h-screen pt-20 pb-20">

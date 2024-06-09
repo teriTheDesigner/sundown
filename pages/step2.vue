@@ -87,7 +87,7 @@ function updateImages() {
 </script>
 
 <template>
-  <div v-if="displayPage" class="h-screen">
+  <div v-if="displayPage" class="h-screen ml-10 mr-10">
     <Nav></Nav>
     <Stepper />
     <form @submit.prevent="updateImages" class="pt-20 pb-20">

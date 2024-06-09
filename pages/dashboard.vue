@@ -47,7 +47,7 @@ function changeStep() {
 </script>
 
 <template>
-  <div v-if="displayPage">
+  <div class="ml-10 mr-10" v-if="displayPage">
     <Nav></Nav>
     <div class="pt-20 pb-20 h-screen">
       <div class="content-container mx-auto grid grid-cols-12">
