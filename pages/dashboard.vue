@@ -53,6 +53,13 @@ const globalStore = useGlobalStore();
 const stepperStore = useSteps();
 const displayPage = ref(false);
 
+const selectedReport = ref(null);
+
+function openReport(report) {
+  selectedReport.value = null;
+  selectedReport.value = report;
+}
+
 onMounted(() => {
   const user = localStorage.getItem("validUser");
   displayPage.value = user && user !== "undefined";
@@ -305,6 +312,7 @@ function changeStep() {
                         v-for="(report, index) in globalStore.allReports"
                         :key="index"
                         class="cursor-pointer"
+                        @click="openReport(report)"
                       >
                         <TableCell> ID 676-75-34{{ report.id }} </TableCell>
                         <TableCell class="hidden sm:table-cell">
@@ -363,31 +371,30 @@ function changeStep() {
           </TabsContent>
         </Tabs>
       </div>
-      <SheetContent class="dark p-0 bg-black border-[#27272A]">
+      <SheetContent
+        v-if="selectedReport"
+        class="dark p-0 bg-black border-[#27272A] lg:max-w-[450px] overflow-y-auto"
+      >
         <div>
-          <!-- <Card class="overflow-hidden border-none rounded-none">
+          <Card class="border-none rounded-none">
             <CardHeader class="flex flex-row items-start bg-[#18181A]">
               <div class="grid gap-0.5">
                 <CardTitle class="group flex items-center gap-2 text-lg">
-                  Order ID: Oe31b70H
+                  Mission ID: 676-75-34{{ selectedReport.id }}
                   <Button
                     size="icon"
                     variant="outline"
                     class="h-6 w-6 opacity-0 transition-opacity group-hover:opacity-100"
                   >
                     <Copy class="h-3 w-3" />
-                    <span class="sr-only">Copy Order ID</span>
+                    <span class="sr-only">Copy Mission ID</span>
                   </Button>
                 </CardTitle>
-                <CardDescription>Date: November 23, 2023</CardDescription>
+                <CardDescription
+                  >Date: {{ selectedReport.date }}</CardDescription
+                >
               </div>
               <div class="ml-auto flex items-center gap-1">
-                <Button size="sm" variant="outline" class="h-8 gap-1">
-                  <Truck class="h-3.5 w-3.5" />
-                  <span class="lg:sr-only xl:not-sr-only xl:whitespace-nowrap">
-                    Track Order
-                  </span>
-                </Button>
                 <DropdownMenu>
                   <DropdownMenuTrigger as-child>
                     <Button size="icon" variant="outline" class="h-8 w-8">
@@ -399,117 +406,64 @@ function changeStep() {
                     <DropdownMenuItem>Edit</DropdownMenuItem>
                     <DropdownMenuItem>Export</DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Trash</DropdownMenuItem>
+                    <DropdownMenuItem>Delete</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
             </CardHeader>
             <CardContent class="p-6 text-sm">
               <div class="grid gap-3">
-                <div class="font-semibold">Order Details</div>
-                <ul class="grid gap-3">
-                  <li class="flex items-center justify-between">
-                    <span class="text-muted-foreground">
-                      Glimmer Lamps x <span>2</span>
-                    </span>
-                    <span>$250.00</span>
-                  </li>
-                  <li class="flex items-center justify-between">
-                    <span class="text-muted-foreground">
-                      Aqua Filters x <span>1</span>
-                    </span>
-                    <span>$49.00</span>
-                  </li>
-                </ul>
+                <div class="font-semibold text-xl">
+                  {{ selectedReport.name }}
+                </div>
+                <p class="opacity-60">{{ selectedReport.description }}</p>
+
                 <Separator class="my-2" />
                 <ul class="grid gap-3">
                   <li class="flex items-center justify-between">
-                    <span class="text-muted-foreground">Subtotal</span>
-                    <span>$299.00</span>
+                    <span class="text-muted-foreground">Latitude</span>
+                    <span>{{ selectedReport.latitude }}</span>
                   </li>
                   <li class="flex items-center justify-between">
-                    <span class="text-muted-foreground">Shipping</span>
-                    <span>$5.00</span>
-                  </li>
-                  <li class="flex items-center justify-between">
-                    <span class="text-muted-foreground">Tax</span>
-                    <span>$25.00</span>
-                  </li>
-                  <li class="flex items-center justify-between font-semibold">
-                    <span class="text-muted-foreground">Total</span>
-                    <span>$329.00</span>
+                    <span class="text-muted-foreground">Longitude</span>
+                    <span>{{ selectedReport.longitude }}</span>
                   </li>
                 </ul>
               </div>
               <Separator class="my-4" />
-              <div class="grid grid-cols-2 gap-4">
-                <div class="grid gap-3">
-                  <div class="font-semibold">Shipping Information</div>
-                  <address
-                    class="grid gap-0.5 not-italic text-muted-foreground"
-                  >
-                    <span>Liam Johnson</span>
-                    <span>1234 Main St.</span>
-                    <span>Anytown, CA 12345</span>
-                  </address>
-                </div>
-                <div class="grid auto-rows-max gap-3">
-                  <div class="font-semibold">Billing Information</div>
-                  <div class="text-muted-foreground">
-                    Same as shipping address
+              <div class="grid gap-4">
+                <div class="grid">
+                  <div class="font-semibold mb-6">Evidence Images</div>
+                  <div class="flex flex-wrap">
+                    <div
+                      v-for="(image, index) in selectedReport.images"
+                      :key="index"
+                      class="lg:w-48 lg:h-48 md:w-24 md:h-24 w-20 h-20 overflow-hidden pb-2 pr-2"
+                    >
+                      <img
+                        :src="image.image.img_src"
+                        alt="mars image"
+                        class="object-cover w-full h-full"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <Separator class="my-4" />
-              <div class="grid gap-3">
-                <div class="font-semibold">Customer Information</div>
-                <dl class="grid gap-3">
-                  <div class="flex items-center justify-between">
-                    <dt class="text-muted-foreground">Customer</dt>
-                    <dd>Liam Johnson</dd>
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <dt class="text-muted-foreground">Email</dt>
-                    <dd>
-                      <a href="mailto:">liam@acme.com</a>
-                    </dd>
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <dt class="text-muted-foreground">Phone</dt>
-                    <dd>
-                      <a href="tel:">+1 234 567 890</a>
-                    </dd>
-                  </div>
-                </dl>
-              </div>
-              <Separator class="my-4" />
-              <div class="grid gap-3">
-                <div class="font-semibold">Payment Information</div>
-                <dl class="grid gap-3">
-                  <div class="flex items-center justify-between">
-                    <dt class="flex items-center gap-1 text-muted-foreground">
-                      <CreditCard class="h-4 w-4" />
-                      Visa
-                    </dt>
-                    <dd>**** **** **** 4532</dd>
-                  </div>
-                </dl>
               </div>
             </CardContent>
             <CardFooter
               class="flex flex-row items-center bg-[#18181A] px-6 py-3"
             >
               <div class="text-xs text-muted-foreground">
-                Updated <time dateTime="2023-11-23">November 23, 2023</time>
+                Last Updated <time>{{ selectedReport.date }}</time>
               </div>
-              <Pagination class="ml-auto mr-0 w-auto">
+              <!-- <Pagination class="ml-auto mr-0 w-auto">
                 <PaginationList class="gap-1">
                   <PaginationPrev variant="outline" class="h-6 w-6" />
                   <PaginationNext variant="outline" class="h-6 w-6" />
                 </PaginationList>
-              </Pagination>
+              </Pagination> -->
             </CardFooter>
-          </Card> -->
+          </Card>
         </div>
       </SheetContent>
     </main>
