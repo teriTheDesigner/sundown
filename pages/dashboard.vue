@@ -59,6 +59,20 @@ function openReport(report) {
   selectedReport.value = null;
   selectedReport.value = report;
 }
+async function exportAllReports() {
+  const allReports = document.getElementById("all-reports");
+
+  if (typeof window !== "undefined") {
+    const { default: html2PDF } = await import("jspdf-html2canvas");
+
+    html2PDF(allReports, {
+      jsPDF: {
+        format: "a4",
+      },
+      output: "./sundown/all-reports.pdf",
+    });
+  }
+}
 
 onMounted(() => {
   const user = localStorage.getItem("validUser");
@@ -272,6 +286,7 @@ function changeStep() {
                 variant="outline"
                 size="sm"
                 class="h-7 gap-1 rounded-md px-3"
+                @click="exportAllReports"
               >
                 <File class="h-3.5 w-3.5" />
                 <span class="sr-only sm:not-sr-only">Export as PDF</span>
@@ -279,7 +294,7 @@ function changeStep() {
             </div>
           </div>
           <TabsContent value="week">
-            <Card>
+            <Card id="all-reports">
               <CardHeader class="px-7">
                 <CardTitle>Mission Reports</CardTitle>
                 <CardDescription>
