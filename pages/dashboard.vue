@@ -59,6 +59,33 @@ function openReport(report) {
   selectedReport.value = null;
   selectedReport.value = report;
 }
+
+async function exportSelectedReport() {
+  const report = document.getElementById("selected-report");
+
+  if (typeof window !== "undefined") {
+    const { default: html2PDF } = await import("jspdf-html2canvas");
+
+    html2PDF(report, {
+      jsPDF: {
+        format: "a4",
+      },
+
+      // TO DO - FIX IMAGES
+      html2canvas: {
+        imageTimeout: 15000,
+        logging: true,
+        useCORS: true,
+      },
+      imageType: "image/jpeg",
+      imageQuality: 1,
+      autoResize: false,
+
+      output: "./sundown/report.pdf",
+    });
+  }
+}
+
 async function exportAllReports() {
   const allReports = document.getElementById("all-reports");
 
@@ -392,7 +419,7 @@ function changeStep() {
         v-if="selectedReport"
         class="dark p-0 bg-black border-[#27272A] lg:max-w-[450px] overflow-y-auto"
       >
-        <div>
+        <div id="selected-report">
           <Card class="border-none rounded-none">
             <CardHeader class="flex flex-row items-start bg-[#18181A]">
               <div class="grid gap-0.5">
@@ -421,7 +448,9 @@ function changeStep() {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
                     <DropdownMenuItem>Edit</DropdownMenuItem>
-                    <DropdownMenuItem>Export as PDF</DropdownMenuItem>
+                    <DropdownMenuItem @click="exportSelectedReport"
+                      >Export as PDF</DropdownMenuItem
+                    >
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>Delete</DropdownMenuItem>
                   </DropdownMenuContent>
