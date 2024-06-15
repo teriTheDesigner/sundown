@@ -385,8 +385,13 @@ function changeStep() {
                               </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
-                              <DropdownMenuItem class="cursor-pointer"
-                                >Open</DropdownMenuItem
+                              <SheetTrigger
+                                as-child
+                                @click="openReport(report)"
+                              >
+                                <DropdownMenuItem class="cursor-pointer"
+                                  >Open</DropdownMenuItem
+                                ></SheetTrigger
                               >
                               <NuxtLink
                                 @click="() => editReport(index)"
@@ -394,8 +399,6 @@ function changeStep() {
                                 ><DropdownMenuItem class="cursor-pointer"
                                   >Edit</DropdownMenuItem
                                 ></NuxtLink
-                              ><DropdownMenuItem class="cursor-pointer"
-                                >Export</DropdownMenuItem
                               >
                               <DropdownMenuSeparator />
                               <DropdownMenuItem
@@ -447,12 +450,18 @@ function changeStep() {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    <DropdownMenuItem>Edit</DropdownMenuItem>
-                    <DropdownMenuItem @click="exportSelectedReport"
+                    <DropdownMenuItem class="cursor-pointer"
+                      >Edit</DropdownMenuItem
+                    >
+                    <DropdownMenuItem
+                      @click="exportSelectedReport"
+                      class="cursor-pointer"
                       >Export as PDF</DropdownMenuItem
                     >
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Delete</DropdownMenuItem>
+                    <DropdownMenuItem class="cursor-pointer"
+                      >Delete</DropdownMenuItem
+                    >
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
