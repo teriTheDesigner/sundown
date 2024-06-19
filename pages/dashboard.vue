@@ -419,7 +419,7 @@ function changeStep() {
         </Tabs>
         <Card
           v-else
-          class="sm:col-span-1 py-12 flex justify-center align-middle"
+          class="sm:col-span-1 py-12 lg:py-20 flex justify-center align-middle"
         >
           <CardHeader class="pb-3">
             <CardTitle class="pb-3 text-center"
