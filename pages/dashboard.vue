@@ -263,7 +263,7 @@ function changeStep() {
             </CardFooter>
           </Card>
         </div>
-        <Tabs default-value="week">
+        <Tabs v-if="globalStore.allReports.length > 3" default-value="week">
           <div class="flex items-center">
             <TabsList>
               <TabsTrigger value="week"> Week </TabsTrigger>
@@ -417,6 +417,21 @@ function changeStep() {
             </Card>
           </TabsContent>
         </Tabs>
+        <Card
+          v-else
+          class="sm:col-span-1 py-12 flex justify-center align-middle"
+        >
+          <CardHeader class="pb-3">
+            <CardTitle class="pb-3 text-center"
+              >Nothing to See Here..&nbsp; Literally!
+            </CardTitle>
+            <CardDescription
+              class="max-w-lg text-balance leading-relaxed text-center"
+            >
+              Create new space mission reports and they'll show up here.
+            </CardDescription>
+          </CardHeader>
+        </Card>
       </div>
       <SheetContent
         v-if="selectedReport"
