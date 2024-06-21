@@ -263,7 +263,7 @@ function changeStep() {
             </CardFooter>
           </Card>
         </div>
-        <Tabs v-if="globalStore.allReports.length > 3" default-value="week">
+        <Tabs v-if="globalStore.allReports.length > 0" default-value="week">
           <div class="flex items-center">
             <TabsList>
               <TabsTrigger value="week"> Week </TabsTrigger>
@@ -349,10 +349,12 @@ function changeStep() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    <SheetTrigger as-child>
+                    <SheetTrigger
+                      as-child
+                      v-for="(report, index) in globalStore.allReports"
+                      :key="index"
+                    >
                       <TableRow
-                        v-for="(report, index) in globalStore.allReports"
-                        :key="index"
                         class="cursor-pointer"
                         @click="openReport(report)"
                       >
