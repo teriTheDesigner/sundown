@@ -4,6 +4,7 @@ import { useGlobalStore } from "../store/user";
 import { useSteps } from "../store/stepper";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
 const globalStore = useGlobalStore();
 const stepperStore = useSteps();
@@ -55,14 +56,26 @@ onMounted(() => {
             <div class="grid w-full max-w-sm md:max-w-md items-center gap-4">
               <Label class="text-base" for="reportName">Mission Name</Label>
               <Input
-                class="text-black text-base border h-12 border-gray-600 focus:outline-gray-600"
+                class="text-black border h-12 border-gray-600 focus:outline-gray-600"
                 v-model="reportName"
                 required
                 id="reportName"
                 placeholder="Lunar explore"
               />
             </div>
-            <label class="flex flex-col gap-4">
+            <div class="grid w-full gap-4">
+              <Label class="text-base" for="description"
+                >Mission Description</Label
+              >
+              <Textarea
+                v-model="reportDescription"
+                class="border focus:outline-gray-600 text-black p-3 border-gray-600 h-40"
+                id="description"
+                placeholder="As our spacecraft ventures into the unknown, exploring distant planets and uncovering the mysteries of the cosmos.."
+                required
+              />
+            </div>
+            <!-- <label class="flex flex-col gap-4">
               Mission Description
               <textarea
                 v-model="reportDescription"
@@ -70,7 +83,7 @@ onMounted(() => {
                 type="text"
                 required
               ></textarea>
-            </label>
+            </label> -->
           </div>
           <div class="col-start-9 col-end-13 flex flex-col justify-between">
             <label class="flex flex-col gap-4">
