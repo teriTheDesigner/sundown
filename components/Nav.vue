@@ -19,7 +19,7 @@ function changeStep() {
   <div class="pt-8 pb-8">
     <div class="max-w-[1300px] place-items-center mx-auto flex justify-between">
       <NuxtLink class="hover:scale-105" @click="changeStep" to="/dashboard"
-        >LOGO</NuxtLink
+        >HOME</NuxtLink
       >
       <div class="flex gap-8 place-items-center">
         <NuxtLink class="hover:scale-105" to="/"
