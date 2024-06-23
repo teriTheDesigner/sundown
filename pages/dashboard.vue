@@ -227,11 +227,9 @@ function changeStep() {
                 create new ones
               </CardDescription>
             </CardHeader>
-            <CardFooter>
-              <Button>
-                <NuxtLink @click="changeStep" to="/step1"
-                  >Create New Report</NuxtLink
-                ></Button
+            <CardFooter
+              ><NuxtLink @click="changeStep" to="/step1">
+                <Button> Create New Report</Button></NuxtLink
               >
             </CardFooter>
           </Card>
