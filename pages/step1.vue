@@ -2,6 +2,8 @@
 import { ref, onMounted } from "vue";
 import { useGlobalStore } from "../store/user";
 import { useSteps } from "../store/stepper";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const globalStore = useGlobalStore();
 const stepperStore = useSteps();
@@ -40,8 +42,8 @@ onMounted(() => {
           @submit.prevent="updateUser"
           class="content-container mx-auto grid grid-cols-12 justify-center"
         >
-          <div class="col-start-1 col-end-6 flex flex-col gap-20">
-            <label class="flex flex-col gap-4">
+          <div class="col-start-1 col-end-6 flex flex-col gap-16">
+            <!-- <label class="flex flex-col gap-4">
               Mission Name
               <input
                 v-model="reportName"
@@ -49,7 +51,17 @@ onMounted(() => {
                 type="text"
                 required
               />
-            </label>
+            </label> -->
+            <div class="grid w-full max-w-sm md:max-w-md items-center gap-4">
+              <Label class="text-base" for="reportName">Mission Name</Label>
+              <Input
+                class="text-black text-base border h-12 border-gray-600 focus:outline-gray-600"
+                v-model="reportName"
+                required
+                id="reportName"
+                placeholder="Lunar explore"
+              />
+            </div>
             <label class="flex flex-col gap-4">
               Mission Description
               <textarea
