@@ -5,6 +5,7 @@ import { useSteps } from "../store/stepper";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 
 const globalStore = useGlobalStore();
 const stepperStore = useSteps();
@@ -35,7 +36,7 @@ onMounted(() => {
 
 <template>
   <div class="ml-10 mr-10" v-if="displayPage">
-    <div class="max-w-screen-2xl mx-auto">
+    <div class="max-w-screen-xl mx-auto">
       <Nav></Nav>
       <Stepper />
       <div class="h-screen pt-20 pb-20">
@@ -43,7 +44,9 @@ onMounted(() => {
           @submit.prevent="updateUser"
           class="content-container mx-auto grid grid-cols-12 justify-center"
         >
-          <div class="col-start-1 col-end-6 flex flex-col gap-16">
+          <div
+            class="col-start-1 md:col-end-6 col-end-12 flex flex-col md:gap-16 gap-8"
+          >
             <!-- <label class="flex flex-col gap-4">
               Mission Name
               <input
@@ -53,7 +56,7 @@ onMounted(() => {
                 required
               />
             </label> -->
-            <div class="grid w-full max-w-sm md:max-w-md items-center gap-4">
+            <div class="grid w-full items-center gap-4">
               <Label class="text-base" for="reportName">Mission Name</Label>
               <Input
                 class="text-black border h-12 border-gray-600 focus:outline-gray-600"
@@ -85,31 +88,33 @@ onMounted(() => {
               ></textarea>
             </label> -->
           </div>
-          <div class="col-start-9 col-end-13 flex flex-col justify-between">
+          <div
+            class="md:col-start-9 md:col-end-13 mt-8 md:mt-0 col-start-1 col-end-12 flex flex-col justify-between"
+          >
             <label class="flex flex-col gap-4">
               Mission Date
               <input
                 v-model="reportDate"
-                class="border focus:outline-gray-600 text-black p-2 border-gray-600 h-12"
+                class="border rounded-md focus:outline-gray-600 text-black p-2 border-gray-600 h-12"
                 type="date"
                 required
               />
             </label>
-            <div class="flex flex-col gap-4">
+            <div class="flex flex-col mt-8 md:mt-0 gap-4">
               <p v-if="isButtonDisabled" class="text-sm text-red-500">
                 <b> Please fill in all fields.</b>
               </p>
-              <button
+
+              <Button
                 :disabled="isButtonDisabled"
                 type="submit"
                 :class="{
                   'hover:scale-105': !isButtonDisabled,
                   'opacity-60': isButtonDisabled,
                 }"
-                class="rounded h-12 w-52 bg-white text-black flex flex-col items-center justify-center"
+                class="h-12 w-52 bg-white text-black flex flex-col items-center justify-center"
+                >NEXT STEP</Button
               >
-                NEXT STEP
-              </button>
             </div>
           </div>
         </form>
