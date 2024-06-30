@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import DatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
 
 const globalStore = useGlobalStore();
 const stepperStore = useSteps();
@@ -99,6 +101,17 @@ onMounted(() => {
                 type="date"
                 required
               />
+              <!-- <DatePicker
+                v-model="reportDate"
+                :style="{
+                  '--dp-border-radius': '8px',
+                  '--dp-selected-color': '#ff7f50',
+                  '--dp-background': '#f0f0f0',
+                }"
+                :weekday-format="'short'"
+                :calendar-class="'custom-calendar'"
+                class="rounded-md border"
+              /> -->
             </label>
             <div class="flex flex-col mt-8 md:mt-0 gap-4">
               <p v-if="isButtonDisabled" class="text-sm text-red-500">
