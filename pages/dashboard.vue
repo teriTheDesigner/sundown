@@ -53,6 +53,9 @@ import { subMonths, subYears, isAfter, compareDesc } from "date-fns";
 const globalStore = useGlobalStore();
 const stepperStore = useSteps();
 const displayPage = ref(false);
+let currentTimestamp = ref(null);
+const altitude = ref(null);
+const velocity = ref(null);
 
 const selectedReport = ref(null);
 
@@ -127,6 +130,12 @@ onMounted(() => {
   const user = localStorage.getItem("validUser");
   displayPage.value = user && user !== "undefined";
 
+  fetchISSLocation();
+  setInterval(() => {
+    currentTimestamp.value = null;
+    fetchISSLocation();
+  }, 10000);
+
   const userData = localStorage.getItem(globalStore.email);
   if (userData) {
     const userDataObj = JSON.parse(userData);
@@ -140,6 +149,28 @@ onMounted(() => {
     globalStore.report = userDataObj.report;
   }
 });
+
+const fetchISSLocation = async () => {
+  let targetTimestamp = currentTimestamp.value
+    ? Math.floor(currentTimestamp.value)
+    : Math.floor(Date.now() / 3000);
+
+  try {
+    const response = await fetch(
+      `https://api.wheretheiss.at/v1/satellites/25544?timestamp=${targetTimestamp}`
+    );
+    if (response.ok) {
+      const data = await response.json();
+      altitude.value = Math.floor(data.altitude * 100) / 100;
+      velocity.value = Math.floor(data.velocity * 100) / 100;
+      currentTimestamp.value = targetTimestamp;
+    } else {
+      console.error("Failed to fetch ISS location data");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
 
 function editReport(index) {
   console.log("editing report", index);
@@ -259,7 +290,7 @@ function changeStep() {
           <Card>
             <CardHeader class="pb-2">
               <CardDescription>Current Altitude of ISS</CardDescription>
-              <CardTitle class="xl:text-4xl"> 424.03 km </CardTitle>
+              <CardTitle class="xl:text-4xl"> {{ altitude }} km </CardTitle>
             </CardHeader>
             <CardContent>
               <div class="text-xs text-gray-400">Above Earth's Surface</div>
@@ -272,7 +303,7 @@ function changeStep() {
             <CardHeader class="pb-2">
               <CardDescription>Current Velocity</CardDescription>
               <CardTitle class="xl:text-3xl text-xl">
-                27,573.62 km/h
+                {{ velocity }} km/h
               </CardTitle>
             </CardHeader>
             <CardContent>
