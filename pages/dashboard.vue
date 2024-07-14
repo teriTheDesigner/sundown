@@ -49,7 +49,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ref, onMounted } from "vue";
 import { useGlobalStore } from "../store/user";
 import { useSteps } from "../store/stepper";
-import { format, subDays, subMonths, subYears, isAfter } from "date-fns";
+import { subMonths, subYears, isAfter, compareDesc } from "date-fns";
 const globalStore = useGlobalStore();
 const stepperStore = useSteps();
 const displayPage = ref(false);
@@ -58,7 +58,12 @@ const selectedReport = ref(null);
 
 const oneYearAgo = subYears(new Date(), 1);
 const oneMonthAgo = subMonths(new Date(), 1);
-const oneWeekAgo = subDays(new Date(), 7);
+
+const sortedReports = computed(() => {
+  return globalStore.allReports
+    .slice()
+    .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
+});
 
 const reportsLastYear = computed(() => {
   return globalStore.allReports.filter((report) =>
@@ -335,6 +340,7 @@ function changeStep() {
               </Button>
             </div>
           </div>
+
           <TabsContent value="all">
             <Card id="all-reports">
               <CardHeader class="px-7">
@@ -366,7 +372,7 @@ function changeStep() {
                   <TableBody>
                     <SheetTrigger
                       as-child
-                      v-for="(report, index) in globalStore.allReports"
+                      v-for="(report, index) in sortedReports"
                       :key="index"
                     >
                       <TableRow
@@ -562,7 +568,7 @@ function changeStep() {
                   <TableBody>
                     <SheetTrigger
                       as-child
-                      v-for="(report, index) in reportsLastYear"
+                      v-for="(report, index) in sortedReports"
                       :key="index"
                     >
                       <TableRow
