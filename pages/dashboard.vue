@@ -261,12 +261,12 @@ function changeStep() {
             </CardFooter>
           </Card>
         </div>
-        <Tabs v-if="globalStore.allReports.length > 0" default-value="week">
+        <Tabs v-if="globalStore.allReports.length > 0" default-value="year">
           <div class="flex items-center">
             <TabsList>
-              <TabsTrigger value="week"> Week </TabsTrigger>
-              <TabsTrigger value="month"> Month </TabsTrigger>
               <TabsTrigger value="year"> Year </TabsTrigger>
+              <TabsTrigger value="month"> Month </TabsTrigger>
+              <TabsTrigger value="week"> Week </TabsTrigger>
             </TabsList>
             <div class="ml-auto flex items-center gap-2">
               <DropdownMenu>
@@ -318,6 +318,202 @@ function changeStep() {
               </Button>
             </div>
           </div>
+          <TabsContent value="year">
+            <Card id="all-reports">
+              <CardHeader class="px-7">
+                <CardTitle>Mission Reports</CardTitle>
+                <CardDescription>
+                  Recent missions created by you
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Table>
+                  <TableHeader>
+                    <TableRow class="hover:bg-black">
+                      <TableHead>Mission ID</TableHead>
+                      <TableHead class="hidden sm:table-cell">
+                        Mission Name
+                      </TableHead>
+                      <TableHead class="hidden sm:table-cell">
+                        Mission Date
+                      </TableHead>
+                      <TableHead class="hidden md:table-cell">
+                        Images</TableHead
+                      >
+                      <TableHead class="hidden md:table-cell">
+                        Status</TableHead
+                      >
+                      <TableHead class="text-right"> Actions</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    <SheetTrigger
+                      as-child
+                      v-for="(report, index) in globalStore.allReports"
+                      :key="index"
+                    >
+                      <TableRow
+                        class="cursor-pointer"
+                        @click="openReport(report)"
+                      >
+                        <TableCell> ID 676-75-34{{ report.id }} </TableCell>
+                        <TableCell class="hidden sm:table-cell">
+                          {{ report.name }}
+                        </TableCell>
+                        <TableCell class="hidden sm:table-cell">
+                          {{ report.date }}</TableCell
+                        >
+                        <TableCell class="hidden md:table-cell">
+                          {{ report.images.length }}</TableCell
+                        >
+                        <TableCell class="hidden md:table-cell">
+                          <Badge class="text-xs" variant="secondary">
+                            Successful
+                          </Badge>
+                        </TableCell>
+                        <TableCell class="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger as-child>
+                              <Button
+                                size="icon"
+                                variant="outline"
+                                class="h-8 w-8"
+                                @click.stop
+                              >
+                                <MoreVertical class="h-3.5 w-3.5" />
+                                <span class="sr-only">More</span>
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <SheetTrigger
+                                as-child
+                                @click="openReport(report)"
+                              >
+                                <DropdownMenuItem class="cursor-pointer"
+                                  >Open</DropdownMenuItem
+                                ></SheetTrigger
+                              >
+                              <NuxtLink
+                                @click="() => editReport(index)"
+                                to="/step1"
+                                ><DropdownMenuItem class="cursor-pointer"
+                                  >Edit</DropdownMenuItem
+                                ></NuxtLink
+                              >
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem
+                                class="cursor-pointer"
+                                @click="() => deleteReport(index)"
+                                >Delete</DropdownMenuItem
+                              >
+                            </DropdownMenuContent>
+                          </DropdownMenu></TableCell
+                        >
+                      </TableRow></SheetTrigger
+                    >
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          </TabsContent>
+          <TabsContent value="month">
+            <Card id="all-reports">
+              <CardHeader class="px-7">
+                <CardTitle>Mission Reports</CardTitle>
+                <CardDescription>
+                  Recent missions created by you
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Table>
+                  <TableHeader>
+                    <TableRow class="hover:bg-black">
+                      <TableHead>Mission ID</TableHead>
+                      <TableHead class="hidden sm:table-cell">
+                        Mission Name
+                      </TableHead>
+                      <TableHead class="hidden sm:table-cell">
+                        Mission Date
+                      </TableHead>
+                      <TableHead class="hidden md:table-cell">
+                        Images</TableHead
+                      >
+                      <TableHead class="hidden md:table-cell">
+                        Status</TableHead
+                      >
+                      <TableHead class="text-right"> Actions</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    <SheetTrigger
+                      as-child
+                      v-for="(report, index) in globalStore.allReports"
+                      :key="index"
+                    >
+                      <TableRow
+                        class="cursor-pointer"
+                        @click="openReport(report)"
+                      >
+                        <TableCell> ID 676-75-34{{ report.id }} </TableCell>
+                        <TableCell class="hidden sm:table-cell">
+                          {{ report.name }}
+                        </TableCell>
+                        <TableCell class="hidden sm:table-cell">
+                          {{ report.date }}</TableCell
+                        >
+                        <TableCell class="hidden md:table-cell">
+                          {{ report.images.length }}</TableCell
+                        >
+                        <TableCell class="hidden md:table-cell">
+                          <Badge class="text-xs" variant="secondary">
+                            Successful
+                          </Badge>
+                        </TableCell>
+                        <TableCell class="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger as-child>
+                              <Button
+                                size="icon"
+                                variant="outline"
+                                class="h-8 w-8"
+                                @click.stop
+                              >
+                                <MoreVertical class="h-3.5 w-3.5" />
+                                <span class="sr-only">More</span>
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <SheetTrigger
+                                as-child
+                                @click="openReport(report)"
+                              >
+                                <DropdownMenuItem class="cursor-pointer"
+                                  >Open</DropdownMenuItem
+                                ></SheetTrigger
+                              >
+                              <NuxtLink
+                                @click="() => editReport(index)"
+                                to="/step1"
+                                ><DropdownMenuItem class="cursor-pointer"
+                                  >Edit</DropdownMenuItem
+                                ></NuxtLink
+                              >
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem
+                                class="cursor-pointer"
+                                @click="() => deleteReport(index)"
+                                >Delete</DropdownMenuItem
+                              >
+                            </DropdownMenuContent>
+                          </DropdownMenu></TableCell
+                        >
+                      </TableRow></SheetTrigger
+                    >
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          </TabsContent>
           <TabsContent value="week">
             <Card id="all-reports">
               <CardHeader class="px-7">
