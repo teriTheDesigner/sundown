@@ -57,6 +57,9 @@ let currentTimestamp = ref(null);
 const altitude = ref(null);
 const velocity = ref(null);
 
+const altitudeClass = ref("");
+const velocityClass = ref("");
+
 const selectedReport = ref(null);
 
 const oneYearAgo = subYears(new Date(), 1);
@@ -161,9 +164,18 @@ const fetchISSLocation = async () => {
     );
     if (response.ok) {
       const data = await response.json();
+
+      altitudeClass.value = "transition-effect";
+      velocityClass.value = "transition-effect";
+
       altitude.value = Math.floor(data.altitude * 100) / 100;
       velocity.value = Math.floor(data.velocity * 100) / 100;
       currentTimestamp.value = targetTimestamp;
+
+      setTimeout(() => {
+        altitudeClass.value = "";
+        velocityClass.value = "";
+      }, 700);
     } else {
       console.error("Failed to fetch ISS location data");
     }
@@ -290,7 +302,9 @@ function changeStep() {
           <Card>
             <CardHeader class="pb-2">
               <CardDescription>Current Altitude of ISS</CardDescription>
-              <CardTitle class="xl:text-4xl"> {{ altitude }} km </CardTitle>
+              <CardTitle class="xl:text-4xl" :class="altitudeClass">
+                {{ altitude }} km
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <div class="text-xs text-gray-400">Above Earth's Surface</div>
@@ -302,7 +316,7 @@ function changeStep() {
           <Card>
             <CardHeader class="pb-2">
               <CardDescription>Current Velocity</CardDescription>
-              <CardTitle class="xl:text-3xl text-xl">
+              <CardTitle class="xl:text-3xl text-xl" :class="velocityClass">
                 {{ velocity }} km/h
               </CardTitle>
             </CardHeader>
@@ -789,3 +803,16 @@ function changeStep() {
     </main>
   </Sheet>
 </template>
+
+<style scoped>
+.transition-effect {
+  opacity: 0;
+  animation: fadeIn 0.7s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+</style>
