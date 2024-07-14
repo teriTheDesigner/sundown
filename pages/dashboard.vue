@@ -49,11 +49,28 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ref, onMounted } from "vue";
 import { useGlobalStore } from "../store/user";
 import { useSteps } from "../store/stepper";
+import { format, subDays, subMonths, subYears, isAfter } from "date-fns";
 const globalStore = useGlobalStore();
 const stepperStore = useSteps();
 const displayPage = ref(false);
 
 const selectedReport = ref(null);
+
+const oneYearAgo = subYears(new Date(), 1);
+const oneMonthAgo = subMonths(new Date(), 1);
+const oneWeekAgo = subDays(new Date(), 7);
+
+const reportsLastYear = computed(() => {
+  return globalStore.allReports.filter((report) =>
+    isAfter(new Date(report.date), oneYearAgo)
+  );
+});
+
+const reportsLastMonth = computed(() => {
+  return globalStore.allReports.filter((report) =>
+    isAfter(new Date(report.date), oneMonthAgo)
+  );
+});
 
 function openReport(report) {
   selectedReport.value = null;
@@ -261,12 +278,12 @@ function changeStep() {
             </CardFooter>
           </Card>
         </div>
-        <Tabs v-if="globalStore.allReports.length > 0" default-value="year">
+        <Tabs v-if="globalStore.allReports.length > 0" default-value="all">
           <div class="flex items-center">
             <TabsList>
-              <TabsTrigger value="year"> Year </TabsTrigger>
+              <TabsTrigger value="all"> All </TabsTrigger>
               <TabsTrigger value="month"> Month </TabsTrigger>
-              <TabsTrigger value="week"> Week </TabsTrigger>
+              <TabsTrigger value="year"> Year </TabsTrigger>
             </TabsList>
             <div class="ml-auto flex items-center gap-2">
               <DropdownMenu>
@@ -318,7 +335,7 @@ function changeStep() {
               </Button>
             </div>
           </div>
-          <TabsContent value="year">
+          <TabsContent value="all">
             <Card id="all-reports">
               <CardHeader class="px-7">
                 <CardTitle>Mission Reports</CardTitle>
@@ -447,7 +464,7 @@ function changeStep() {
                   <TableBody>
                     <SheetTrigger
                       as-child
-                      v-for="(report, index) in globalStore.allReports"
+                      v-for="(report, index) in reportsLastMonth"
                       :key="index"
                     >
                       <TableRow
@@ -514,7 +531,7 @@ function changeStep() {
               </CardContent>
             </Card>
           </TabsContent>
-          <TabsContent value="week">
+          <TabsContent value="year">
             <Card id="all-reports">
               <CardHeader class="px-7">
                 <CardTitle>Mission Reports</CardTitle>
@@ -545,7 +562,7 @@ function changeStep() {
                   <TableBody>
                     <SheetTrigger
                       as-child
-                      v-for="(report, index) in globalStore.allReports"
+                      v-for="(report, index) in reportsLastYear"
                       :key="index"
                     >
                       <TableRow
